@@ -1,0 +1,29 @@
+package com.ac.reserve.common.config;
+
+import com.ac.reserve.common.domain.BaseResponse;
+import com.ac.reserve.common.exception.ServiceException;
+import com.ac.reserve.common.utils.ResponseBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+//@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public BaseResponse handleException(Exception e){
+        log.error(e.getMessage());
+        return ResponseBuilder.buildError(e.getMessage());
+    }
+
+    @ExceptionHandler(value = ServiceException.class)
+    @ResponseBody
+    public BaseResponse handleRuntimeException(ServiceException e){
+        log.error(e.getMessage());
+        return ResponseBuilder.buildError(e.getMessage());
+    }
+}

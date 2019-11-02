@@ -1,9 +1,18 @@
-# DataSource Config
+server:
+  port: 8080
 spring:
+  redis:
+    database: 0
+    url: redis://user:@127.0.0.1:6379
+    host: 127.0.0.1
+    password:
+    port: 6379
+    ssl: false
+    timeout: 5000s
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/common?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/reserve?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: root
     hikari:
@@ -15,11 +24,26 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  cache:
+    type: redis
+    redis:
+      cache-null-values: false
+      time-to-live: 3600000ms
 
+mybatis:
+  type-aliases-package: com.ac.reserve.web.api.domain
+  mapper-locations: classpath:mapper/*.xml
+
+weChat:
+  appid: wx1a5f71aebc51e337
+  secret: 45e58341e8a505dad4a09b2f322e4395
+
+token:
+  expirationMilliSeconds: 7200000
 
   logging:
     level:
-      com:
-        ac:
-          appoint: debug
-    config: classpath:logback.xml
+      root: debug
+
+#    config: classpath:logback-spring.xml
+

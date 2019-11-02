@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.ac.appoint</groupId>
+    <groupId>com.ac.reserve</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -18,7 +18,6 @@
     <modules>
         <module>dependencies</module>
         <module>common</module>
-        <module>business</module>
         <module>web-api</module>
     </modules>
 
@@ -33,7 +32,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.ac.appoint</groupId>
+                <groupId>com.ac.reserve</groupId>
                 <artifactId>dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
