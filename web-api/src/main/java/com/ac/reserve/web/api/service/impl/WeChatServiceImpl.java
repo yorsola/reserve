@@ -1,21 +1,22 @@
 package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.common.utils.JsonUtil;
+import com.ac.reserve.common.domain.wechat.CredentialResponse;
+import com.ac.reserve.common.domain.wechat.LoginResponse;
 import com.ac.reserve.common.utils.RedisUtil;
 import com.ac.reserve.common.utils.RestUtil;
 import com.ac.reserve.web.api.domain.User;
 import com.ac.reserve.web.api.service.WeChatService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.Map;
 
+import static com.ac.reserve.common.constant.WeChatUrl.GET_ACCESS_TOKEN;
 import static com.ac.reserve.common.constant.WeChatUrl.JS_CODE_2_SESSION;
 
 
@@ -30,32 +31,46 @@ public class WeChatServiceImpl implements WeChatService {
     private String secret;
 
     @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     @Autowired
     private RestUtil restUtil;
 
     @Override
-    @Cacheable(value = "UserInfo",key ="#code",keyGenerator = "")
     public User login(String code){
-        User user = getUser(code);
-        user.setId(1L);
-        String accessToken = UUID.randomUUID().toString();
-        user.setAccessToken(accessToken);
-        return user;
+        LoginResponse loginInfo = getLoginInfo(code);
+        CredentialResponse credential = getAccessToken();
+//        String accessToken = UUID.randomUUID().toString();
+        return null;
     }
 
-    private User getUser(String code){
-        HashMap<String, String>  requestBody= new HashMap<>();
-        requestBody.put("appid",appid);
-        requestBody.put("secret",secret);
-        requestBody.put("js_code",code);
-        requestBody.put("grant_type","authorization_code");
-        String result = restUtil.httpGet(JS_CODE_2_SESSION.getUrl(), requestBody);
-        User user = null;
-        if(StringUtils.isNotBlank(result)){
-            user = JsonUtil.toBean(result,User.class);
-        }
-        return user;
+    private LoginResponse getLoginInfo(String code) {
+        String url = JS_CODE_2_SESSION.getUrl()+
+                "?appid={appid}&secret={secret}&js_code={js_code}&grant_type={grant_type}";
+        Map<String, String> params = new HashMap();
+        params.put("appid", appid);
+        params.put("secret", secret);
+        params.put("js_code", code);
+        params.put("grant_type", "authorization_code");
+
+        LoginResponse response = restTemplate.getForObject(url, LoginResponse.class, params);
+        return response;
+
+    }
+
+    private CredentialResponse getAccessToken() {
+        String url = GET_ACCESS_TOKEN.getUrl()+
+                "?appid={appid}&secret={secret}&grant_type={grant_type}";
+        Map<String, String> params = new HashMap();
+        params.put("appid", appid);
+        params.put("secret", secret);
+        params.put("grant_type", "client_credential");
+
+        CredentialResponse response = restTemplate.getForObject(url, CredentialResponse.class, params);
+        return response;
+
     }
 }

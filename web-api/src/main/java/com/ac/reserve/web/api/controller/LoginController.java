@@ -21,7 +21,7 @@ public class LoginController {
     private WeChatService weChatService;
 
     @PostMapping("")
-    public BaseResponse login(@RequestParam(value = "code", required = false) String code){
+    public BaseResponse login(@RequestParam(value = "code", required = false) String code) {
 
         User user = weChatService.login(code);
         return ResponseBuilder.buildSuccess(user);

@@ -81,6 +81,7 @@ public class RestUtil {
     public String httpGet(String requestUrl) {
         log.debug(String.format("call httpGet{requestUrl=%s}", requestUrl));
         try {
+
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(requestUrl, String.class);
             return null == responseEntity ? null : responseEntity.getBody();
         } catch (RestClientException e) {
@@ -91,6 +92,7 @@ public class RestUtil {
 
     public String httpGet(String requestUrl, Map<String, String> requestBody) {
         log.debug(String.format("call httpGet{requestUrl=%s,requestBody=%s}", requestUrl, JSONObject.toJSONString(requestBody)));
+        System.out.println(requestUrl);
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(requestUrl, String.class, requestBody);
             return null == responseEntity ? null : responseEntity.getBody();
