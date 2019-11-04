@@ -58,5 +58,9 @@
             <version>2.8.0</version>
         </dependency>
         <!-- Swagger2 End -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
     </dependencies>
 </project>
