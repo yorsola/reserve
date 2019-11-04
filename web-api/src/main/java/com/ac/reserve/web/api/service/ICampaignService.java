@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.service;
 
-import com.ac.reserve.web.api.entity.CampaignEntity;
+import com.ac.reserve.web.api.entity.Campaign;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author author
  * @since 2019-11-04
  */
-public interface ICampaignService extends IService<CampaignEntity> {
+public interface ICampaignService extends IService<Campaign> {
 	
 }

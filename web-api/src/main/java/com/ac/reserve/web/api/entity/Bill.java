@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author author
@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Data
 @Accessors(chain = true)
-public class BillEntity implements Serializable {
+public class Bill implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50554
 File Encoding         : 65001
 
-Date: 2019-11-04 21:38:02
+Date: 2019-11-04 23:40:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,16 @@ CREATE TABLE `campaign` (
   `campaign_guidelines` varchar(1024) NOT NULL COMMENT '参与须知',
   `campaign_problems` varchar(1024) NOT NULL COMMENT '常见问答',
   `valid` int(1) NOT NULL DEFAULT '1' COMMENT '有效性',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for round
+-- ----------------------------
+DROP TABLE IF EXISTS `round`;
+CREATE TABLE `round` (
+  `id` bigint(20) NOT NULL,
+  `round_location` varchar(50) NOT NULL COMMENT '场次地址',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

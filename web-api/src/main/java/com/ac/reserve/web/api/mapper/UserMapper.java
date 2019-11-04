@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.mapper;
 
-import com.ac.reserve.web.api.entity.UserEntity;
+import com.ac.reserve.web.api.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2019-11-04
  */
 @Mapper
-public interface UserMapper extends BaseMapper<UserEntity> {
+public interface UserMapper extends BaseMapper<User> {
 	
 	
 	

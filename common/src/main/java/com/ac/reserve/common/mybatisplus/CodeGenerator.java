@@ -26,10 +26,10 @@ import java.util.Map;
 public class CodeGenerator {
 
     // 数据库配置
-    private static String JDBC_URL = "jdbc:mysql://192.168.159.129:3306/reserve?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&characterSetResults=UTF-8";
+    private static String JDBC_URL = "jdbc:mysql://120.0.0.1:3306/reserve?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&characterSetResults=UTF-8";
     private static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static String JDBC_USERNAME = "root";
-    private static String JDBC_PASSWORD = "123456";
+    private static String JDBC_PASSWORD = "root";
     // 是否继承BaseEntity
     private static boolean BASE_ENTITY = false;
     // 是否继承BaseController
@@ -48,7 +48,7 @@ public class CodeGenerator {
      */
     public static void main(String[] args) {
         // 生成test表
-        String[] tabArr = new String[]{"bill","campaign", "user"};
+        String[] tabArr = new String[]{"round"};
         // 模块名称
         String moduleName = "api";
         // 是否继承BaseEntity

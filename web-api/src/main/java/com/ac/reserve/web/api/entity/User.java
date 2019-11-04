@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Data
 @Accessors(chain = true)
-public class UserEntity implements Serializable {
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

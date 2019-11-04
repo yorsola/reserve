@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.service;
 
-import com.ac.reserve.web.api.entity.UserEntity;
+import com.ac.reserve.web.api.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author author
  * @since 2019-11-04
  */
-public interface IUserService extends IService<UserEntity> {
+public interface IUserService extends IService<User> {
 	
 }

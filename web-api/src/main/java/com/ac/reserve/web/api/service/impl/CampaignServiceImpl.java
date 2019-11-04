@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.web.api.entity.CampaignEntity;
+import com.ac.reserve.web.api.entity.Campaign;
 import com.ac.reserve.web.api.mapper.CampaignMapper;
 import com.ac.reserve.web.api.service.ICampaignService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @since 2019-11-04
  */
 @Service
-public class CampaignServiceImpl extends ServiceImpl<CampaignMapper, CampaignEntity> implements ICampaignService {
+public class CampaignServiceImpl extends ServiceImpl<CampaignMapper, Campaign> implements ICampaignService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CampaignServiceImpl.class);
 	

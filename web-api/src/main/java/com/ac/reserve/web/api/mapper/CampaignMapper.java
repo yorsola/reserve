@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.mapper;
 
-import com.ac.reserve.web.api.entity.CampaignEntity;
+import com.ac.reserve.web.api.entity.Campaign;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2019-11-04
  */
 @Mapper
-public interface CampaignMapper extends BaseMapper<CampaignEntity> {
+public interface CampaignMapper extends BaseMapper<Campaign> {
 	
 	
 	
