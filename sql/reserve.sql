@@ -22,8 +22,7 @@ DROP TABLE IF EXISTS `bill`;
 CREATE TABLE `bill` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '用户 id',
-  `
-possessor_number` varchar(50) NOT NULL COMMENT '使用人证件号',
+  `possessor_number` varchar(50) NOT NULL COMMENT '使用人证件号',
   `possessor_name` varchar(50) NOT NULL COMMENT '使用人名字',
   `possessor_phone` varchar(20) NOT NULL COMMENT '使用人电话',
   `round` varchar(50) NOT NULL COMMENT '场次',
