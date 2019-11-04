@@ -1,10 +1,9 @@
-package com.ac.reserve.common.config;
+package com.ac.reserve.common.config.handler;
 
 import com.ac.reserve.common.domain.BaseResponse;
 import com.ac.reserve.common.exception.ServiceException;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
