@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.mapper;
 
-import com.ac.reserve.web.api.entity.Bill;
+import com.ac.reserve.web.api.po.Bill;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
