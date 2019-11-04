@@ -41,13 +41,12 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public User login(String code){
-        LoginResponseDTO loginInfo = getLoginInfo(code);
-        CredentialResponseDTO credential = getAccessToken();
+        LoginResponseDTO loginInfo = getLoginResponseDTO(code);
 //        String accessToken = UUID.randomUUID().toString();
         return null;
     }
 
-    private LoginResponseDTO getLoginInfo(String code) {
+    private LoginResponseDTO getLoginResponseDTO(String code) {
         String url = JS_CODE_2_SESSION.getUrl()+
                 "?appid={appid}&secret={secret}&js_code={js_code}&grant_type={grant_type}";
         Map<String, String> params = new HashMap();
@@ -61,7 +60,7 @@ public class WeChatServiceImpl implements WeChatService {
 
     }
 
-    private CredentialResponseDTO getAccessToken() {
+    private CredentialResponseDTO getCredentialResponseDTO() {
         String url = GET_ACCESS_TOKEN.getUrl()+
                 "?appid={appid}&secret={secret}&grant_type={grant_type}";
         Map<String, String> params = new HashMap();
