@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-//@ControllerAdvice
+//@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
 @Slf4j
 public class GlobalExceptionHandler {
 
