@@ -1,9 +1,9 @@
-package com.ac.reserve.common.domain.wechat;
+package com.ac.reserve.common.dto.wechat;
 
 import lombok.Data;
 
 @Data
-public class CommonResponse {
+public class CommonResponseDTO {
     private Integer errcode;
     private String errmsg;
 

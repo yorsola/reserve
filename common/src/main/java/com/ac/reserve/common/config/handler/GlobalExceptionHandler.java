@@ -1,6 +1,6 @@
 package com.ac.reserve.common.config.handler;
 
-import com.ac.reserve.common.domain.BaseResponse;
+import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.exception.ServiceException;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
-//@ControllerAdvice
+//@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
 @Slf4j
 public class GlobalExceptionHandler {
 

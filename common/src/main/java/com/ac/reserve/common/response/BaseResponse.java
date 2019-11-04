@@ -1,15 +1,9 @@
-package com.ac.reserve.common.domain;
+package com.ac.reserve.common.response;
 
 import com.ac.reserve.common.constant.ResponseEnum;
 
 import java.io.Serializable;
 
-/**
- * @ClassName BaseResponse
- * @Description 统一的响应格式
- * @Author zhuangding
- * @Date 2019/11/02 11:24
- **/
 public class BaseResponse<T> implements Serializable {
     private static final long serialVersionUID = -1475769720865099686L;
     private String code;
