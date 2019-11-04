@@ -25,8 +25,8 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Reserve API 文档")
-                .description("Reserve API 文档，http://www.baidu.com")
-                .termsOfServiceUrl("http://www.baidu.com")
+                .description("Reserve API 文档，http://localhost:8080/")
+                .termsOfServiceUrl("http://localhost:8080/")
                 .version("1.0.0")
                 .build();
     }
