@@ -1,6 +1,8 @@
 package com.ac.reserve.common.interceptor;
 
+import com.ac.reserve.common.utils.JsonUtil;
 import com.ac.reserve.common.utils.RedisUtil;
+import com.ac.reserve.common.utils.ResponseBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -8,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -20,8 +24,19 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(accessToken) && redisUtil.hasKey(accessToken)) {
             return true;
         }
+        PrintWriter writer = null;
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        try {
+            writer = response.getWriter();
+            writer.print(JsonUtil.toJSON(ResponseBuilder.buildError("Invalid accessToken")));
+        } catch (IOException e) {
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
         return false;
-
     }
 
     @Override
