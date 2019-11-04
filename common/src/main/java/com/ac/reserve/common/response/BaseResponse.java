@@ -1,4 +1,4 @@
-package com.ac.reserve.common.domain;
+package com.ac.reserve.common.response;
 
 import com.ac.reserve.common.constant.ResponseEnum;
 

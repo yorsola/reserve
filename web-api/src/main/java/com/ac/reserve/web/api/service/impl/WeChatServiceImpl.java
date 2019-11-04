@@ -1,7 +1,7 @@
 package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.common.domain.wechat.CredentialResponse;
-import com.ac.reserve.common.domain.wechat.LoginResponse;
+import com.ac.reserve.common.dto.wechat.CredentialResponse;
+import com.ac.reserve.common.dto.wechat.LoginResponse;
 import com.ac.reserve.common.utils.RedisUtil;
 import com.ac.reserve.common.utils.RestUtil;
 import com.ac.reserve.web.api.domain.User;

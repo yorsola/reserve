@@ -1,7 +1,7 @@
 package com.ac.reserve.common.utils;
 
 import com.ac.reserve.common.constant.ResponseEnum;
-import com.ac.reserve.common.domain.BaseResponse;
+import com.ac.reserve.common.response.BaseResponse;
 
 /**
  * @ClassName ResponseBuilder

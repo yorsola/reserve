@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.controller;
 
-import com.ac.reserve.common.domain.BaseResponse;
+import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.domain.User;
 import com.ac.reserve.web.api.service.WeChatService;
