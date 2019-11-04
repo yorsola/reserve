@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.reserve.web.api.mapper.RoundMapper">
+
+
+        <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Round">
+        <id column="id" property="id" />
+        <result column="round_location" property="roundLocation" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+      id, round_location
+    </sql>
+
+    
+    <!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+      <where>
+        <if test="ew != null">
+          <if test="ew.entity != null">
+            <if test="ew.entity.id!=null">
+              AND cur_tab.id=#{ew.entity.id}
+            </if>
+            <if test="ew.entity.roundLocation!=null and ew.entity.roundLocation!=''">
+              AND cur_tab.round_location=#{ew.entity.roundLocation}
+            </if>
+          </if>
+          <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">
+              ${ew.sqlSegment}
+          </if>
+        </if>
+      </where>
+      <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+          ${ew.sqlSegment}
+      </if>
+    </sql>
+
+
+</mapper>
