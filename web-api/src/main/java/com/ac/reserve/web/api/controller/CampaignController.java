@@ -2,6 +2,7 @@ package com.ac.reserve.web.api.controller;
 
 import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.utils.ResponseBuilder;
+import com.ac.reserve.web.api.dto.CampaignDTO;
 import com.ac.reserve.web.api.po.Campaign;
 import com.ac.reserve.web.api.service.CampaignService;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,7 @@ public class CampaignController {
     @ApiOperation(value = "获取活动信息")
     @GetMapping("/info")
     public BaseResponse getCampaignInfo() {
-        Campaign campaign = campaignService.getEffectiveCampaign();
-        return ResponseBuilder.buildSuccess(campaign);
+        CampaignDTO campaignDTO = campaignService.getEffectiveCampaign();
+        return ResponseBuilder.buildSuccess(campaignDTO);
     }
 }

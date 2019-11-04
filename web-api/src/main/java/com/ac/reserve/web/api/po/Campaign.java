@@ -35,11 +35,7 @@ public class Campaign implements Serializable {
      */
     @ApiModelProperty(value = "活动时间")
     private LocalDateTime campaignTime;
-    /**
-     * 活动场次
-     */
-    @ApiModelProperty(value = "活动场次")
-    private Integer campaignRound;
+
     /**
      * 活动详情
      */

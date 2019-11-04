@@ -7,11 +7,12 @@
     <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Round">
         <id column="id" property="id" />
         <result column="round_location" property="roundLocation" />
+        <result column="campaign_id" property="campaignId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id, round_location
+      id, round_location,campaign_id
     </sql>
 
     
@@ -25,6 +26,9 @@
             </if>
             <if test="ew.entity.roundLocation!=null and ew.entity.roundLocation!=''">
               AND cur_tab.round_location=#{ew.entity.roundLocation}
+            </if>
+            <if test="ew.entity.campaignId!=null and ew.entity.campaignId!=''">
+              AND cur_tab.campaign_id=#{ew.entity.campaignId}
             </if>
           </if>
           <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">

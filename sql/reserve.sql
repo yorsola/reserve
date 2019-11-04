@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50554
 File Encoding         : 65001
 
-Date: 2019-11-04 23:40:13
+Date: 2019-11-05 01:19:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,13 +46,12 @@ CREATE TABLE `campaign` (
   `campaign_name` varchar(50) NOT NULL COMMENT '活动名称',
   `campaign_location` varchar(50) NOT NULL COMMENT '活动地址',
   `campaign_time` datetime NOT NULL COMMENT '活动时间',
-  `campaign_round` int(5) NOT NULL COMMENT '活动场次',
   `campaign_details` varchar(1024) NOT NULL COMMENT '活动详情',
   `campaign_guidelines` varchar(1024) NOT NULL COMMENT '参与须知',
   `campaign_problems` varchar(1024) NOT NULL COMMENT '常见问答',
   `valid` int(1) NOT NULL DEFAULT '1' COMMENT '有效性',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for round
@@ -61,6 +60,7 @@ DROP TABLE IF EXISTS `round`;
 CREATE TABLE `round` (
   `id` bigint(20) NOT NULL,
   `round_location` varchar(50) NOT NULL COMMENT '场次地址',
+  `campaign_id` bigint(20) NOT NULL COMMENT '活动 id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

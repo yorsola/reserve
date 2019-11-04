@@ -20,6 +20,11 @@ public class Round implements Serializable {
      */
     @ApiModelProperty(value = "场次地址")
     private String roundLocation;
+    /**
+     * 活动id
+     */
+    @ApiModelProperty(value = "活动id")
+    private Long campaignId;
 
 
 }
