@@ -5,5 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 public interface CampaignService extends IService<Campaign> {
+    public Campaign getEffectiveCampaign();
 
 }

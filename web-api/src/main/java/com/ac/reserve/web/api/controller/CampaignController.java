@@ -20,7 +20,7 @@ public class CampaignController {
     @ApiOperation(value = "获取活动信息")
     @GetMapping("/info")
     public BaseResponse getCampaignInfo() {
-        Campaign campaign = campaignService.getById(1L);
+        Campaign campaign = campaignService.getEffectiveCampaign();
         return ResponseBuilder.buildSuccess(campaign);
     }
 }

@@ -26,7 +26,7 @@ import java.util.Map;
 public class CodeGenerator {
 
     // 数据库配置
-    private static String JDBC_URL = "jdbc:mysql://120.0.0.1:3306/reserve?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&characterSetResults=UTF-8";
+    private static String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/reserve?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&characterSetResults=UTF-8";
     private static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static String JDBC_USERNAME = "root";
     private static String JDBC_PASSWORD = "root";
