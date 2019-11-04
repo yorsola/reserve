@@ -1,7 +1,7 @@
 package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.common.dto.wechat.CredentialResponse;
-import com.ac.reserve.common.dto.wechat.LoginResponse;
+import com.ac.reserve.common.dto.wechat.CredentialResponseDTO;
+import com.ac.reserve.common.dto.wechat.LoginResponseDTO;
 import com.ac.reserve.common.utils.RedisUtil;
 import com.ac.reserve.common.utils.RestUtil;
 import com.ac.reserve.web.api.domain.User;
@@ -41,13 +41,13 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public User login(String code){
-        LoginResponse loginInfo = getLoginInfo(code);
-        CredentialResponse credential = getAccessToken();
+        LoginResponseDTO loginInfo = getLoginInfo(code);
+        CredentialResponseDTO credential = getAccessToken();
 //        String accessToken = UUID.randomUUID().toString();
         return null;
     }
 
-    private LoginResponse getLoginInfo(String code) {
+    private LoginResponseDTO getLoginInfo(String code) {
         String url = JS_CODE_2_SESSION.getUrl()+
                 "?appid={appid}&secret={secret}&js_code={js_code}&grant_type={grant_type}";
         Map<String, String> params = new HashMap();
@@ -56,12 +56,12 @@ public class WeChatServiceImpl implements WeChatService {
         params.put("js_code", code);
         params.put("grant_type", "authorization_code");
 
-        LoginResponse response = restTemplate.getForObject(url, LoginResponse.class, params);
+        LoginResponseDTO response = restTemplate.getForObject(url, LoginResponseDTO.class, params);
         return response;
 
     }
 
-    private CredentialResponse getAccessToken() {
+    private CredentialResponseDTO getAccessToken() {
         String url = GET_ACCESS_TOKEN.getUrl()+
                 "?appid={appid}&secret={secret}&grant_type={grant_type}";
         Map<String, String> params = new HashMap();
@@ -69,7 +69,7 @@ public class WeChatServiceImpl implements WeChatService {
         params.put("secret", secret);
         params.put("grant_type", "client_credential");
 
-        CredentialResponse response = restTemplate.getForObject(url, CredentialResponse.class, params);
+        CredentialResponseDTO response = restTemplate.getForObject(url, CredentialResponseDTO.class, params);
         return response;
 
     }
