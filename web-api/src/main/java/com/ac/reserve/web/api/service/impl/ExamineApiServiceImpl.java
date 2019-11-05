@@ -1,8 +1,8 @@
-package com.ac.reserve.web.examineapi.service.impl;
+package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.web.api.dto.ReserveBillRequestDTO;
-import com.ac.reserve.web.examineapi.dto.ApplyExaminePostRequestDTO;
-import com.ac.reserve.web.examineapi.service.ExamineApiService;
+import com.ac.reserve.web.api.dto.BillRequestDTO;
+import com.ac.reserve.web.api.dto.DocketRequestDTO;
+import com.ac.reserve.web.api.service.ExamineApiService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +22,27 @@ public class ExamineApiServiceImpl implements ExamineApiService {
 
     @Value("${examine.url.applyExamineUrl}")
     private String applyExamineUrl;
+
     @Value("${examine.url.checkExamineUrl}")
     private String checkExamineUrl;
+
     @Value("${examine.account.user}")
     private String user;
+
     @Value("${examine.account.password}")
     private String password;
 
     @Override
-    public JSONObject applyExamine(ReserveBillRequestDTO reserveBillRequestDTO){
+    public JSONObject applyExamine(BillRequestDTO billRequestDTO){
+        DocketRequestDTO docketRequestDTO = DocketRequestDTO.builder()
+                .zname(billRequestDTO.getPossessorName())
+                .znumber(billRequestDTO.getPossessorNumber())
+                .ztype(billRequestDTO.getDocumentType())
+                .ztypename(getIdCardTypeName(billRequestDTO.getDocumentType()))
+                .dydw(billRequestDTO.getCompany()).build();
 
-        ApplyExaminePostRequestDTO applyExaminePostRequestDTO = new ApplyExaminePostRequestDTO();
-        applyExaminePostRequestDTO.setZname(reserveBillRequestDTO.getPossessorName());
-        applyExaminePostRequestDTO.setZnumber(reserveBillRequestDTO.getPossessorNumber());
-        applyExaminePostRequestDTO.setDydw(reserveBillRequestDTO.getCompanyName());
-        applyExaminePostRequestDTO.setZtype(reserveBillRequestDTO.getDocumentType());
-        applyExaminePostRequestDTO.setZtypename(getIdCardTypeName(reserveBillRequestDTO.getDocumentType()));
-
-        Map map = new HashMap();
-        map.put("data", applyExaminePostRequestDTO);
+        Map<String,Object> map = new HashMap();
+        map.put("data", docketRequestDTO);
         map.put("user", user);
         map.put("password", password);
         String response = restTemplate.postForObject(applyExamineUrl, map, String.class);
@@ -51,13 +53,13 @@ public class ExamineApiServiceImpl implements ExamineApiService {
 
     @Override
     public JSONObject checkExamineResult(String examineId){
-        Map map = new HashMap();
-        Map o = new HashMap<>();
-        o.put("bsId", examineId);
-        map.put("user", user);
-        map.put("password", password);
-        map.put("data", o);
-        String forObject = restTemplate.postForObject(checkExamineUrl, map, String.class);
+        Map<String,Object> params = new HashMap();
+        Map<String,Object> data = new HashMap<>();
+        data.put("bsId", examineId);
+        params.put("user", user);
+        params.put("password", password);
+        params.put("data", data);
+        String forObject = restTemplate.postForObject(checkExamineUrl, params, String.class);
         JSONObject jsonObject = JSONObject.parseObject(forObject);
         return jsonObject;
     }

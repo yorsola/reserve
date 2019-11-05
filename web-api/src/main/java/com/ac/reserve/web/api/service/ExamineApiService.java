@@ -1,16 +1,16 @@
-package com.ac.reserve.web.examineapi.service;
+package com.ac.reserve.web.api.service;
 
-import com.ac.reserve.web.api.dto.ReserveBillRequestDTO;
+import com.ac.reserve.web.api.dto.BillRequestDTO;
 import com.alibaba.fastjson.JSONObject;
 
 public interface ExamineApiService {
 
     /**
      * 请求备审
-     * @param reserveBillRequestDTO
+     * @param billRequestDTO
      * @return 备审 ID
      */
-    JSONObject applyExamine(ReserveBillRequestDTO reserveBillRequestDTO);
+    JSONObject applyExamine(BillRequestDTO billRequestDTO);
 
     /**
      * 备审结果查询

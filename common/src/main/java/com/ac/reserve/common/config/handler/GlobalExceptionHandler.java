@@ -9,13 +9,14 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
 
-//@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
+@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
 @Slf4j
 public class GlobalExceptionHandler {
 
@@ -39,6 +40,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = {BindException.class, MethodArgumentNotValidException.class})
+    @ResponseBody
     public BaseResponse dataInvalidExceptionHandler(Exception ex) {
         BindingResult bindingResult = null;
         if (ex instanceof BindException) {

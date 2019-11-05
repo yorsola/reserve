@@ -1,4 +1,4 @@
-package com.ac.reserve.web.examineapi.dto;
+package com.ac.reserve.web.api.dto;
 
 import lombok.Data;
 

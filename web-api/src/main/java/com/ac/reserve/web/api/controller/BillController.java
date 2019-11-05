@@ -3,18 +3,19 @@ package com.ac.reserve.web.api.controller;
 import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.utils.ResponseBuilder;
-import com.ac.reserve.web.api.dto.ReserveBillRequestDTO;
+import com.ac.reserve.web.api.dto.BillRequestDTO;
 import com.ac.reserve.web.api.po.Bill;
 import com.ac.reserve.web.api.service.BillService;
-import com.ac.reserve.web.examineapi.dto.ApplyExaminePostRequestDTO;
-import com.ac.reserve.web.examineapi.service.ExamineApiService;
+import com.ac.reserve.web.api.service.ExamineApiService;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +27,12 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(value="bill_controller",tags={"票据接口"})
 @RestController
 @RequestMapping("/bill")
+@CrossOrigin("*")
 public class BillController {
+
     @Autowired
     private BillService billService;
     @Autowired
@@ -41,7 +45,7 @@ public class BillController {
             @ApiImplicitParam(name = "userid", value = "用户id", required = true,  paramType = "path"),
     })
     @GetMapping("/{userid}")
-    public BaseResponse getCampaignInfo(@PathVariable(value = "userid",required = true)Integer userId) {
+    public BaseResponse getBillInfo(@PathVariable(value = "userid",required = true)Integer userId) {
         QueryWrapper<Bill> billQueryWrapper = new QueryWrapper<>();
         billQueryWrapper.eq("user_id",userId);
         billQueryWrapper.eq("valid", DataSourceConstant.DATA_SOURCE_VALID);
@@ -49,12 +53,13 @@ public class BillController {
         return ResponseBuilder.buildSuccess(list);
     }
 
-    @ApiOperation(value = "预约")
-    @PostMapping("/")
-    public BaseResponse fun(@RequestBody @Valid List<ReserveBillRequestDTO> billRequestDTOS){
-        Bill bill;
+    @ApiOperation(value = "立即预约")
+    @PostMapping("/reserve")
+    public BaseResponse reserve(@RequestBody @Valid List<BillRequestDTO> billRequestDTOS){
+        Bill bill = null;
+        String bsId = null;
         List<Bill> list = new ArrayList<>();
-        for (ReserveBillRequestDTO requestDTO : billRequestDTOS) {
+        for (BillRequestDTO requestDTO : billRequestDTOS) {
             JSONObject jsonObject = examineApiService.applyExamine(requestDTO);
             if (jsonObject == null) {
                 continue;
@@ -63,18 +68,18 @@ public class BillController {
             BeanUtils.copyProperties(requestDTO, bill);
             // 申请成功
             if (APPLY_EXAMINE_SUCCESS.equals(jsonObject.getString("code"))) {
-                bill.setState(0);
+                bill.setState(DataSourceConstant.APPROVAL_IN_HAND);
                 JSONObject data = jsonObject.getJSONObject("data");
-                String bsId = data.getString("bsId");
+                bsId = data.getString("bsId");
                 bill.setExamineId(bsId);
             }
             // 申请失败
             else {
-                bill.setState(2);
+                bill.setState(DataSourceConstant.APPROVAL_FAILED);
             }
             list.add(bill);
         }
         billService.saveBatch(list);
-        return ResponseBuilder.buildSuccess("预约成功");
+        return ResponseBuilder.buildSuccess("预约成功.");
     }
 }

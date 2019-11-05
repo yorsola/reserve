@@ -1,14 +1,15 @@
-package com.ac.reserve.web.examineapi.dto;
+package com.ac.reserve.web.api.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * 申请备审请求对象
  */
 @Data
-public class ApplyExaminePostRequestDTO {
-
+@Builder
+public class DocketRequestDTO {
     @ApiModelProperty(value = "证件类型编码")
     private String ztype;
     @ApiModelProperty(value = "证件类型名称")

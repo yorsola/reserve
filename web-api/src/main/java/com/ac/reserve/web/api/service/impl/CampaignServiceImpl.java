@@ -7,7 +7,6 @@ import com.ac.reserve.web.api.po.Campaign;
 import com.ac.reserve.web.api.mapper.CampaignMapper;
 import com.ac.reserve.web.api.po.Round;
 import com.ac.reserve.web.api.service.CampaignService;
-import com.ac.reserve.web.api.service.RoundService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -34,21 +33,21 @@ public class CampaignServiceImpl extends ServiceImpl<CampaignMapper, Campaign> i
     private RoundMapper roundMapper;
 
     @Override
-    @Cacheable(value="Campaign", key="'effective_campaign'")
+    @Cacheable(value = "Campaign", key = "'effective_campaign'")
     public CampaignDTO getEffectiveCampaign() {
         QueryWrapper<Campaign> campaignQueryWrapper = new QueryWrapper<>();
         campaignQueryWrapper.eq("valid", DATA_SOURCE_VALID);
         List<Campaign> campaigns = campaignMapper.selectList(campaignQueryWrapper);
         if (campaigns != null && campaigns.size() != 0) {
             CampaignDTO campaignDTO = new CampaignDTO();
-            BeanUtils.copyProperties(campaigns.get(0),campaignDTO);
+            BeanUtils.copyProperties(campaigns.get(0), campaignDTO);
             QueryWrapper<Round> roundQueryWrapper = new QueryWrapper<>();
             roundQueryWrapper.eq("campaign_id", campaignDTO.getId());
             List<Round> rounds = roundMapper.selectList(roundQueryWrapper);
             campaignDTO.setRoundList(rounds);
             return campaignDTO;
         }
-        throw new ServiceException("Campaign does not exist.");
+        throw new ServiceException("活动不存在.");
     }
 
 }
