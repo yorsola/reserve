@@ -31,11 +31,20 @@ public class Campaign implements Serializable {
     @ApiModelProperty(value = "活动地址")
     private String campaignLocation;
     /**
+     * 经度
+     */
+    @ApiModelProperty(value = "经度")
+    private String longitude;
+    /**
+     * 纬度
+     */
+    @ApiModelProperty(value = "纬度")
+    private String latitude;
+    /**
      * 活动时间
      */
     @ApiModelProperty(value = "活动时间")
     private LocalDateTime campaignTime;
-
     /**
      * 活动详情
      */
@@ -56,6 +65,5 @@ public class Campaign implements Serializable {
      */
     @ApiModelProperty(value = "有效性")
     private Integer valid;
-
 
 }

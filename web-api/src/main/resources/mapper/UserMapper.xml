@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.reserve.web.api.mapper.UserMapper">
+
+
+        <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.User">
+        <id column="id" property="id" />
+        <result column="openid" property="openid" />
+        <result column="session_key" property="sessionKey" />
+        <result column="access_token" property="accessToken" />
+        <result column="created" property="created" />
+        <result column="updated" property="updated" />
+        <result column="valid" property="valid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+      id, openid, session_key, access_token, created, updated, valid
+    </sql>
+
+    
+    <!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+      <where>
+        <if test="ew != null">
+          <if test="ew.entity != null">
+            <if test="ew.entity.id!=null">
+              AND cur_tab.id=#{ew.entity.id}
+            </if>
+            <if test="ew.entity.openid!=null and ew.entity.openid!=''">
+              AND cur_tab.openid=#{ew.entity.openid}
+            </if>
+            <if test="ew.entity.sessionKey!=null and ew.entity.sessionKey!=''">
+              AND cur_tab.session_key=#{ew.entity.sessionKey}
+            </if>
+            <if test="ew.entity.accessToken!=null and ew.entity.accessToken!=''">
+              AND cur_tab.access_token=#{ew.entity.accessToken}
+            </if>
+            <if test="ew.entity.created!=null">
+              AND cur_tab.created=#{ew.entity.created}
+            </if>
+            <if test="ew.entity.updated!=null">
+              AND cur_tab.updated=#{ew.entity.updated}
+            </if>
+            <if test="ew.entity.valid!=null">
+              AND cur_tab.valid=#{ew.entity.valid}
+            </if>
+          </if>
+          <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">
+              ${ew.sqlSegment}
+          </if>
+        </if>
+      </where>
+      <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+          ${ew.sqlSegment}
+      </if>
+    </sql>
+
+
+</mapper>

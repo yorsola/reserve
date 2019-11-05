@@ -17,7 +17,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.funtl.itoken.service.admin.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ac.reserve.web.api.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

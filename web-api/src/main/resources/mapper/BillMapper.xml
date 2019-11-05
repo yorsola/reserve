@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.reserve.web.api.mapper.BillMapper">
+
+
+        <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Bill">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="document_type" property="documentType" />
+        <result column="possessor_number" property="possessorNumber" />
+        <result column="possessor_name" property="possessorName" />
+        <result column="possessor_phone" property="possessorPhone" />
+        <result column="round" property="round" />
+        <result column="code" property="code" />
+        <result column="type" property="type" />
+        <result column="state" property="state" />
+        <result column="examine_id" property="examineId" />
+        <result column="created" property="created" />
+        <result column="updated" property="updated" />
+        <result column="valid" property="valid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+      id, user_id, document_type, possessor_number, possessor_name, possessor_phone, round, code, type, state, examine_id, created, updated, valid
+    </sql>
+
+    
+    <!-- mybatis plus where -->
+    <sql id="entityWrapperJoin">
+      <where>
+        <if test="ew != null">
+          <if test="ew.entity != null">
+            <if test="ew.entity.id!=null">
+              AND cur_tab.id=#{ew.entity.id}
+            </if>
+            <if test="ew.entity.userId!=null">
+              AND cur_tab.user_id=#{ew.entity.userId}
+            </if>
+            <if test="ew.entity.documentType!=null and ew.entity.documentType!=''">
+              AND cur_tab.document_type=#{ew.entity.documentType}
+            </if>
+            <if test="ew.entity.possessorNumber!=null and ew.entity.possessorNumber!=''">
+              AND cur_tab.possessor_number=#{ew.entity.possessorNumber}
+            </if>
+            <if test="ew.entity.possessorName!=null and ew.entity.possessorName!=''">
+              AND cur_tab.possessor_name=#{ew.entity.possessorName}
+            </if>
+            <if test="ew.entity.possessorPhone!=null and ew.entity.possessorPhone!=''">
+              AND cur_tab.possessor_phone=#{ew.entity.possessorPhone}
+            </if>
+            <if test="ew.entity.round!=null and ew.entity.round!=''">
+              AND cur_tab.round=#{ew.entity.round}
+            </if>
+            <if test="ew.entity.code!=null and ew.entity.code!=''">
+              AND cur_tab.code=#{ew.entity.code}
+            </if>
+            <if test="ew.entity.type!=null">
+              AND cur_tab.type=#{ew.entity.type}
+            </if>
+            <if test="ew.entity.state!=null">
+              AND cur_tab.state=#{ew.entity.state}
+            </if>
+            <if test="ew.entity.examineId!=null and ew.entity.examineId!=''">
+              AND cur_tab.examine_id=#{ew.entity.examineId}
+            </if>
+            <if test="ew.entity.created!=null">
+              AND cur_tab.created=#{ew.entity.created}
+            </if>
+            <if test="ew.entity.updated!=null">
+              AND cur_tab.updated=#{ew.entity.updated}
+            </if>
+            <if test="ew.entity.valid!=null">
+              AND cur_tab.valid=#{ew.entity.valid}
+            </if>
+          </if>
+          <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">
+              ${ew.sqlSegment}
+          </if>
+        </if>
+      </where>
+      <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+          ${ew.sqlSegment}
+      </if>
+    </sql>
+
+
+</mapper>

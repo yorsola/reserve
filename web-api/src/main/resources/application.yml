@@ -41,4 +41,12 @@ weChat:
 token:
   expirationMilliSeconds: 7200000
 
+examine:
+  url:
+    applyExamineUrl: http://www.daxinghuodong.cn:8081/service/bskService/backgroundCheckService.action
+    checkExamineUrl: http://www.daxinghuodong.cn:8081/service/bskService/backgroundCheckResult.action
+  account:
+    user: 2020hz
+    password: 2020hz*_123
+
 

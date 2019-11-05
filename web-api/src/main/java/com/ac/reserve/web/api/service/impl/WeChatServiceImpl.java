@@ -4,7 +4,7 @@ import com.ac.reserve.common.dto.wechat.CredentialResponseDTO;
 import com.ac.reserve.common.dto.wechat.LoginResponseDTO;
 import com.ac.reserve.common.utils.RedisUtil;
 import com.ac.reserve.common.utils.RestUtil;
-import com.ac.reserve.web.api.domain.User;
+import com.ac.reserve.web.api.po.User;
 import com.ac.reserve.web.api.service.WeChatService;
 
 import lombok.extern.slf4j.Slf4j;

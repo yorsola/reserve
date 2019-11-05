@@ -2,7 +2,7 @@ package com.ac.reserve.web.api.controller;
 
 import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.utils.ResponseBuilder;
-import com.ac.reserve.web.api.domain.User;
+import com.ac.reserve.web.api.po.User;
 import com.ac.reserve.web.api.service.WeChatService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
