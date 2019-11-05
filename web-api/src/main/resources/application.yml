@@ -29,6 +29,8 @@ spring:
     redis:
       cache-null-values: false
       time-to-live: 3600000ms
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis:
   type-aliases-package: com.ac.reserve.web.api.domain
