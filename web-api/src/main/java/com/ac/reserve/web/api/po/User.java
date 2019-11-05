@@ -1,15 +1,14 @@
 package com.ac.reserve.web.api.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-
-import java.time.LocalDate;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
@@ -36,21 +35,21 @@ public class User implements Serializable {
      * 访问令牌
      */
     @ApiModelProperty(value = "访问令牌")
-    private String accessToken;
+    private String accesstoken;
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    private LocalDate created;
+    private LocalDateTime created;
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
-    private LocalDate updated;
+    private LocalDateTime updated;
     /**
-     * 有效性
+     * 有效性,1-存在，0-不存在
      */
-    @ApiModelProperty(value = "有效性")
+    @ApiModelProperty(value = "有效性,1-存在，0-不存在")
     private Integer valid;
 
 

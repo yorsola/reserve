@@ -2,12 +2,12 @@ package com.ac.reserve.web.api.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
@@ -17,8 +17,11 @@ public class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "")
+    /**
+     * 活动 id
+     */
+    @TableId(value="id", type= IdType.AUTO)
+    @ApiModelProperty(value = "活动 id")
     private Long id;
     /**
      * 活动名称
@@ -30,6 +33,11 @@ public class Campaign implements Serializable {
      */
     @ApiModelProperty(value = "活动地址")
     private String campaignLocation;
+    /**
+     * 活动图片
+     */
+    @ApiModelProperty(value = "活动图片")
+    private String campaignImg;
     /**
      * 经度
      */
@@ -61,9 +69,11 @@ public class Campaign implements Serializable {
     @ApiModelProperty(value = "常见问答")
     private String campaignProblems;
     /**
-     * 有效性
+     * 有效性，1-存在，0-不存在
      */
-    @ApiModelProperty(value = "有效性")
+    @ApiModelProperty(value = "有效性，1-存在，0-不存在")
     private Integer valid;
+
+
 
 }

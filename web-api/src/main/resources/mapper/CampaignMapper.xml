@@ -3,11 +3,12 @@
 <mapper namespace="com.ac.reserve.web.api.mapper.CampaignMapper">
 
 
-    <!-- 通用查询映射结果 -->
+        <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Campaign">
         <id column="id" property="id" />
         <result column="campaign_name" property="campaignName" />
         <result column="campaign_location" property="campaignLocation" />
+        <result column="campaign_img" property="campaignImg" />
         <result column="longitude" property="longitude" />
         <result column="latitude" property="latitude" />
         <result column="campaign_time" property="campaignTime" />
@@ -19,54 +20,57 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id, campaign_name, campaign_location, longitude, latitude, campaign_time, campaign_details, campaign_guidelines, campaign_problems, valid
+      id, campaign_name, campaign_location, campaign_img, longitude, latitude, campaign_time, campaign_details, campaign_guidelines, campaign_problems, valid
     </sql>
 
-
+    
     <!-- mybatis plus where -->
     <sql id="entityWrapperJoin">
-        <where>
-            <if test="ew != null">
-                <if test="ew.entity != null">
-                    <if test="ew.entity.id!=null">
-                        AND cur_tab.id=#{ew.entity.id}
-                    </if>
-                    <if test="ew.entity.campaignName!=null and ew.entity.campaignName!=''">
-                        AND cur_tab.campaign_name=#{ew.entity.campaignName}
-                    </if>
-                    <if test="ew.entity.campaignLocation!=null and ew.entity.campaignLocation!=''">
-                        AND cur_tab.campaign_location=#{ew.entity.campaignLocation}
-                    </if>
-                    <if test="ew.entity.longitude!=null and ew.entity.longitude!=''">
-                        AND cur_tab.longitude=#{ew.entity.longitude}
-                    </if>
-                    <if test="ew.entity.latitude!=null and ew.entity.latitude!=''">
-                        AND cur_tab.latitude=#{ew.entity.latitude}
-                    </if>
-                    <if test="ew.entity.campaignTime!=null">
-                        AND cur_tab.campaign_time=#{ew.entity.campaignTime}
-                    </if>
-                    <if test="ew.entity.campaignDetails!=null and ew.entity.campaignDetails!=''">
-                        AND cur_tab.campaign_details=#{ew.entity.campaignDetails}
-                    </if>
-                    <if test="ew.entity.campaignGuidelines!=null and ew.entity.campaignGuidelines!=''">
-                        AND cur_tab.campaign_guidelines=#{ew.entity.campaignGuidelines}
-                    </if>
-                    <if test="ew.entity.campaignProblems!=null and ew.entity.campaignProblems!=''">
-                        AND cur_tab.campaign_problems=#{ew.entity.campaignProblems}
-                    </if>
-                    <if test="ew.entity.valid!=null">
-                        AND cur_tab.valid=#{ew.entity.valid}
-                    </if>
-                </if>
-                <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">
-                    ${ew.sqlSegment}
-                </if>
+      <where>
+        <if test="ew != null">
+          <if test="ew.entity != null">
+            <if test="ew.entity.id!=null">
+              AND cur_tab.id=#{ew.entity.id}
             </if>
-        </where>
-        <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
-            ${ew.sqlSegment}
+            <if test="ew.entity.campaignName!=null and ew.entity.campaignName!=''">
+              AND cur_tab.campaign_name=#{ew.entity.campaignName}
+            </if>
+            <if test="ew.entity.campaignLocation!=null and ew.entity.campaignLocation!=''">
+              AND cur_tab.campaign_location=#{ew.entity.campaignLocation}
+            </if>
+            <if test="ew.entity.campaignImg!=null and ew.entity.campaignImg!=''">
+              AND cur_tab.campaign_img=#{ew.entity.campaignImg}
+            </if>
+            <if test="ew.entity.longitude!=null and ew.entity.longitude!=''">
+              AND cur_tab.longitude=#{ew.entity.longitude}
+            </if>
+            <if test="ew.entity.latitude!=null and ew.entity.latitude!=''">
+              AND cur_tab.latitude=#{ew.entity.latitude}
+            </if>
+            <if test="ew.entity.campaignTime!=null">
+              AND cur_tab.campaign_time=#{ew.entity.campaignTime}
+            </if>
+            <if test="ew.entity.campaignDetails!=null and ew.entity.campaignDetails!=''">
+              AND cur_tab.campaign_details=#{ew.entity.campaignDetails}
+            </if>
+            <if test="ew.entity.campaignGuidelines!=null and ew.entity.campaignGuidelines!=''">
+              AND cur_tab.campaign_guidelines=#{ew.entity.campaignGuidelines}
+            </if>
+            <if test="ew.entity.campaignProblems!=null and ew.entity.campaignProblems!=''">
+              AND cur_tab.campaign_problems=#{ew.entity.campaignProblems}
+            </if>
+            <if test="ew.entity.valid!=null">
+              AND cur_tab.valid=#{ew.entity.valid}
+            </if>
+          </if>
+          <if test="ew!=null and ew.sqlSegment!=null and ew.nonEmptyOfNormal">
+              ${ew.sqlSegment}
+          </if>
         </if>
+      </where>
+      <if test="ew!=null and ew.sqlSegment!=null and ew.emptyOfWhere">
+          ${ew.sqlSegment}
+      </if>
     </sql>
 
 

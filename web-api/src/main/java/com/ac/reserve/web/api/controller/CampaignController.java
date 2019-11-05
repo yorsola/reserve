@@ -3,7 +3,6 @@ package com.ac.reserve.web.api.controller;
 import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.dto.CampaignDTO;
-import com.ac.reserve.web.api.po.Campaign;
 import com.ac.reserve.web.api.service.CampaignService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

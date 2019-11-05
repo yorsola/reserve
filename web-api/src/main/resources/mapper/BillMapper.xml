@@ -10,8 +10,9 @@
         <result column="document_type" property="documentType" />
         <result column="possessor_number" property="possessorNumber" />
         <result column="possessor_name" property="possessorName" />
+        <result column="possessor_img" property="possessorImg" />
         <result column="possessor_phone" property="possessorPhone" />
-        <result column="round" property="round" />
+        <result column="round_id" property="roundId" />
         <result column="code" property="code" />
         <result column="type" property="type" />
         <result column="state" property="state" />
@@ -23,7 +24,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id, user_id, document_type, possessor_number, possessor_name, possessor_phone, round, code, type, state, examine_id, created, updated, valid
+      id, user_id, document_type, possessor_number, possessor_name, possessor_img, possessor_phone, round_id, code, type, state, examine_id, created, updated, valid
     </sql>
 
     
@@ -47,11 +48,14 @@
             <if test="ew.entity.possessorName!=null and ew.entity.possessorName!=''">
               AND cur_tab.possessor_name=#{ew.entity.possessorName}
             </if>
+            <if test="ew.entity.possessorImg!=null and ew.entity.possessorImg!=''">
+              AND cur_tab.possessor_img=#{ew.entity.possessorImg}
+            </if>
             <if test="ew.entity.possessorPhone!=null and ew.entity.possessorPhone!=''">
               AND cur_tab.possessor_phone=#{ew.entity.possessorPhone}
             </if>
-            <if test="ew.entity.round!=null and ew.entity.round!=''">
-              AND cur_tab.round=#{ew.entity.round}
+            <if test="ew.entity.roundId!=null">
+              AND cur_tab.round_id=#{ew.entity.roundId}
             </if>
             <if test="ew.entity.code!=null and ew.entity.code!=''">
               AND cur_tab.code=#{ew.entity.code}

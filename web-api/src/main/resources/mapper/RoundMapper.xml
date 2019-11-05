@@ -6,13 +6,13 @@
         <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Round">
         <id column="id" property="id" />
-        <result column="round_location" property="roundLocation" />
+        <result column="round_info" property="roundInfo" />
         <result column="campaign_id" property="campaignId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id, round_location,campaign_id
+      id, round_info, campaign_id
     </sql>
 
     
@@ -24,10 +24,10 @@
             <if test="ew.entity.id!=null">
               AND cur_tab.id=#{ew.entity.id}
             </if>
-            <if test="ew.entity.roundLocation!=null and ew.entity.roundLocation!=''">
-              AND cur_tab.round_location=#{ew.entity.roundLocation}
+            <if test="ew.entity.roundInfo!=null and ew.entity.roundInfo!=''">
+              AND cur_tab.round_info=#{ew.entity.roundInfo}
             </if>
-            <if test="ew.entity.campaignId!=null and ew.entity.campaignId!=''">
+            <if test="ew.entity.campaignId!=null">
               AND cur_tab.campaign_id=#{ew.entity.campaignId}
             </if>
           </if>

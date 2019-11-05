@@ -8,7 +8,7 @@
         <id column="id" property="id" />
         <result column="openid" property="openid" />
         <result column="session_key" property="sessionKey" />
-        <result column="access_token" property="accessToken" />
+        <result column="accesstoken" property="accesstoken" />
         <result column="created" property="created" />
         <result column="updated" property="updated" />
         <result column="valid" property="valid" />
@@ -16,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-      id, openid, session_key, access_token, created, updated, valid
+      id, openid, session_key, accesstoken, created, updated, valid
     </sql>
 
     
@@ -34,8 +34,8 @@
             <if test="ew.entity.sessionKey!=null and ew.entity.sessionKey!=''">
               AND cur_tab.session_key=#{ew.entity.sessionKey}
             </if>
-            <if test="ew.entity.accessToken!=null and ew.entity.accessToken!=''">
-              AND cur_tab.access_token=#{ew.entity.accessToken}
+            <if test="ew.entity.accesstoken!=null and ew.entity.accesstoken!=''">
+              AND cur_tab.accesstoken=#{ew.entity.accesstoken}
             </if>
             <if test="ew.entity.created!=null">
               AND cur_tab.created=#{ew.entity.created}
