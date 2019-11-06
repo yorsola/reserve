@@ -3,6 +3,7 @@ package com.ac.reserve.web.api.controller;
 import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.response.BaseResponse;
+import com.ac.reserve.common.util.GetRandomString;
 import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
@@ -82,6 +83,8 @@ public class BillController {
                 bill.setExamineId(bsId);
                 // 发送 提交预约 短信
                 SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_SUBMIT, SIGN_NAME, bill.getPossessorPhone(), null);
+                // 生成二维码和条形码
+                String codeValue = GetRandomString.getRandomString(8) + System.currentTimeMillis();
             }
             // 申请失败
             else {

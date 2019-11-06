@@ -38,6 +38,7 @@ public class User implements Serializable {
      * 访问令牌
      */
     @ApiModelProperty(value = "访问令牌")
+    @TableField(value = "access_token")
     private String accesstoken;
     /**
      * 创建时间
