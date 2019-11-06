@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 
 
-@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
+//@ControllerAdvice(basePackages = "com.ac.reserve.web.api.controller")
 @Slf4j
 public class GlobalExceptionHandler {
 

@@ -9,8 +9,8 @@
         <result column="openid" property="openid" />
         <result column="session_key" property="sessionKey" />
         <result column="accesstoken" property="accesstoken" />
-        <result column="created" property="created" />
-        <result column="updated" property="updated" />
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="updated" property="updated" jdbcType="TIMESTAMP"/>
         <result column="valid" property="valid" />
     </resultMap>
 

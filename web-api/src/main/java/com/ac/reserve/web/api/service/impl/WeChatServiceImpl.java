@@ -56,7 +56,10 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public String getSessionInfo(String code) {
-        LoginResponseDTO loginInfo = getLoginResponseDTO(code);
+        LoginResponseDTO loginInfo = new LoginResponseDTO();
+        loginInfo.setOpenid("oTr4F5lO_VLup01hNytIUgW02t08");
+
+//        LoginResponseDTO loginInfo = getLoginResponseDTO(code);
         // 唯一标识 id
         String openid = loginInfo.getOpenid();
         // 随机生成 UUID token

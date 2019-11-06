@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 

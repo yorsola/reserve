@@ -53,4 +53,7 @@ examine:
     user: 2020hz
     password: 2020hz*_123
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
