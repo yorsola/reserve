@@ -3,6 +3,7 @@ package com.ac.reserve.web.api.controller;
 import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.response.BaseResponse;
+import com.ac.reserve.common.util.JSONUtil;
 import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
@@ -59,6 +60,22 @@ public class BillController {
         billQueryWrapper.eq("valid", DataSourceConstant.DATA_SOURCE_VALID);
         List<Bill> list = billService.list(billQueryWrapper);
         return ResponseBuilder.buildSuccess(list);
+    }
+
+    public static void main(String[] args) {
+        List<BillRequestDTO> billRequestDTOS = new ArrayList<>();
+        BillRequestDTO billRequestDTO = new BillRequestDTO();
+        billRequestDTO.setDocumentType("111");
+        billRequestDTO.setPossessorNumber("440801199411262471");
+        billRequestDTO.setPossessorImg("http://localhost:8080/reserve/v1/api/bill/reserve");
+        billRequestDTO.setPossessorName("李四");
+        billRequestDTO.setPossessorPhone("128109012");
+        billRequestDTO.setRoundId(1);
+        billRequestDTO.setType(1);
+        billRequestDTOS.add(billRequestDTO);
+
+        String s = JSONUtil.toJSONString(billRequestDTOS);
+        System.out.println(s);
     }
 
     @ApiOperation(value = "立即预约")

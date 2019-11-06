@@ -33,7 +33,7 @@ public class CampaignServiceImpl extends ServiceImpl<CampaignMapper, Campaign> i
     private RoundMapper roundMapper;
 
     @Override
-    @Cacheable(value = "Campaign", key = "'effective_campaign'")
+//    @Cacheable(value = "Campaign", key = "'effective_campaign'")
     public CampaignDTO getEffectiveCampaign() {
         QueryWrapper<Campaign> campaignQueryWrapper = new QueryWrapper<>();
         campaignQueryWrapper.eq("valid", DATA_SOURCE_VALID);

@@ -6,6 +6,7 @@ import com.ac.reserve.web.api.service.ExamineApiService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +19,8 @@ public class ExamineApiServiceImpl implements ExamineApiService {
 
 
     @Autowired
-    private RestTemplate restTemplate;
+    @Qualifier("docketRestTemplate")
+    private RestTemplate docketRestTemplate;
 
     @Value("${examine.url.applyExamineUrl}")
     private String applyExamineUrl;
@@ -45,7 +47,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
         map.put("data", examineRequestDTO);
         map.put("user", user);
         map.put("password", password);
-        String response = restTemplate.postForObject(applyExamineUrl, map, String.class);
+        String response = docketRestTemplate.postForObject(applyExamineUrl, map, String.class);
         JSONObject jsonObject = JSON.parseObject(response);
         return jsonObject;
 
@@ -59,7 +61,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
         params.put("user", user);
         params.put("password", password);
         params.put("data", data);
-        String forObject = restTemplate.postForObject(checkExamineUrl, params, String.class);
+        String forObject = docketRestTemplate.postForObject(checkExamineUrl, params, String.class);
         JSONObject jsonObject = JSONObject.parseObject(forObject);
         return jsonObject;
     }

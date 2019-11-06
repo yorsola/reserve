@@ -1,25 +1,30 @@
 package com.ac.reserve.web.api.service.impl;
 
+import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.dto.wechat.CredentialResponseDTO;
 import com.ac.reserve.common.dto.wechat.LoginResponseDTO;
 import com.ac.reserve.common.exception.ServiceException;
-import com.ac.reserve.common.utils.RedisUtil;
-import com.ac.reserve.common.utils.RestUtil;
 import com.ac.reserve.web.api.po.User;
 import com.ac.reserve.web.api.service.UserService;
 import com.ac.reserve.web.api.service.WeChatService;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static com.ac.reserve.common.constant.WeChatUrl.GET_ACCESS_TOKEN;
 import static com.ac.reserve.common.constant.WeChatUrl.JS_CODE_2_SESSION;
@@ -29,9 +34,9 @@ import static com.ac.reserve.common.constant.WeChatUrl.JS_CODE_2_SESSION;
 @Slf4j
 public class WeChatServiceImpl implements WeChatService {
     // redis登录保存token前缀
-    private static final String REDIS_LOGIN_TOKEN_KEY = "login_";
-    // token 保存时间 6小时
-    private static final Long REDIS_LOGIN_TOKEN_TIME = 1000 * 60 * 60 * 6L;
+    private static final String REDIS_LOGIN_TOKEN_KEY = "BEARER_TOKEN_";
+    // token 保存时间 2小时
+    private static final Long REDIS_LOGIN_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 2L;
 
     @Value("${weChat.appid}")
     private String appid;
@@ -41,31 +46,48 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Autowired
     private UserService userService;
+
     @Autowired
-    private RestTemplate restTemplate;
+    @Qualifier("weChatRestTemplate")
+    private RestTemplate weChatRestTemplate;
+
     @Autowired
-    private RedisUtil redisUtil;
-    @Autowired
-    private RestUtil restUtil;
+    private RedisTemplate redisTemplate;
 
     @Override
-    public String login(String code){
+    public String getSessionInfo(String code) {
         LoginResponseDTO loginInfo = getLoginResponseDTO(code);
         // 唯一标识 id
         String openid = loginInfo.getOpenid();
         // 随机生成 UUID token
         String accessToken = REDIS_LOGIN_TOKEN_KEY + UUID.randomUUID().toString();
-        redisUtil.set(accessToken, openid, REDIS_LOGIN_TOKEN_TIME);
-        User user = User.builder()
-                .openid(openid)
-                .sessionKey(loginInfo.getSession_key())
-                .build();
-        userService.save(user);
-       return accessToken;
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("openid", openid);
+        wrapper.eq("valid", DataSourceConstant.DATA_SOURCE_VALID);
+        User user = userService.getOne(wrapper);
+        Date now = new Date();
+        // 用户已存在
+        if (user != null && StringUtils.isNotBlank(user.getOpenid())) {
+            user.setAccesstoken(accessToken);
+            user.setUpdated(now);
+            user.setSessionKey(loginInfo.getSession_key());
+        } else {
+            user = User.builder()
+                    .openid(openid)
+                    .sessionKey(loginInfo.getSession_key())
+                    .accesstoken(accessToken)
+                    .created(now)
+                    .updated(now)
+                    .build();
+        }
+        userService.saveOrUpdate(user);
+        redisTemplate.opsForValue().set(accessToken, openid, REDIS_LOGIN_TOKEN_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+        return user.getOpenid();
     }
 
     /**
      * 根据code获取登录参数
+     *
      * @param code
      * @return
      */
@@ -79,15 +101,16 @@ public class WeChatServiceImpl implements WeChatService {
 
         url = expandURL(url, params.keySet());
 
-        JSONObject response = restTemplate.getForObject(url, JSONObject.class, params);
+        JSONObject response = weChatRestTemplate.getForObject(url, JSONObject.class, params);
         if (response == null) {
-            throw new ServiceException("微信登录失败");
+            throw new ServiceException("微信登录失败.");
         }
+
         if (response.get("errcode") != null) {
             if ("40029".equals(response.getString("errcode"))) {
-                throw new ServiceException("code 失效");
+                throw new ServiceException("code 失效.");
             } else if (!"0".equals(response.getString("errcode"))) {
-                throw new ServiceException(response.getString("errmsg"));
+                throw new ServiceException("非法 code," + response.getString("errmsg"));
             }
         }
         LoginResponseDTO loginResponseDTO = JSONObject.toJavaObject(response, LoginResponseDTO.class);
@@ -103,13 +126,14 @@ public class WeChatServiceImpl implements WeChatService {
         params.put("grant_type", "client_credential");
         url = expandURL(url, params.keySet());
 
-        CredentialResponseDTO response = restTemplate.getForObject(url, CredentialResponseDTO.class, params);
+        CredentialResponseDTO response = weChatRestTemplate.getForObject(url, CredentialResponseDTO.class, params);
         return response;
 
     }
 
     /**
      * get url 占位符
+     *
      * @param url
      * @param keys
      * @return

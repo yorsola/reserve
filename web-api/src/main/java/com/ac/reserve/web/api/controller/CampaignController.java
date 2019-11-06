@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value="campaign_controller",tags={"活动接口"})
 @RestController
 @RequestMapping("/campaign")
 @CrossOrigin("*")

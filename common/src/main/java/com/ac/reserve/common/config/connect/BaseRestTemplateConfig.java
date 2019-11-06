@@ -9,8 +9,19 @@ import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
@@ -38,8 +49,21 @@ public class BaseRestTemplateConfig {
         return clientHttpRequestFactory;
     }
 
-
     protected ClientHttpRequestFactory getClientHttpRequestFactory(HttpClient httpClient) {
         return getClientHttpRequestFactory(httpClient, 15000);
+    }
+
+    public class AgentInterceptor implements ClientHttpRequestInterceptor {
+
+        @Override
+        public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+            HttpHeaders headers = request.getHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            List<Charset> charsets = new ArrayList<>();
+            charsets.add(Charset.forName("UTF-8"));
+            headers.setAcceptCharset(charsets);
+
+            return execution.execute(request, body);
+        }
     }
 }
