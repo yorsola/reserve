@@ -16,10 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.activation.CommandMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -66,13 +62,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             qrCode.setIdCardNo(IDCardNo);
             qrCode.setTempKey(key);
             qrCode.setScanTime(TimeOperating.getNowTime());
-            // TODO: 2019/11/6 不知道创建时间是什么类型  需要补充
-//            qrCode.setCreated(TimeOperating.getNowTime());
         }
         qrCode.setTempValue(value);
         qrCode.setValid(CommonConstant.oneInt);
-        // TODO: 2019/11/6 不知道创建时间是什么类型  需要补充
-//        qrCode.updated(TimeOperating.getNowTimestamp());
         return qrCode;
     }
 

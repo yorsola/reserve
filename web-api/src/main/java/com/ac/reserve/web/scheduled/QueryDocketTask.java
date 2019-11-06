@@ -1,6 +1,8 @@
 package com.ac.reserve.web.scheduled;
 
+import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
+import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.web.api.po.Bill;
 import com.ac.reserve.web.api.service.BillService;
 import com.ac.reserve.web.api.service.ExamineApiService;
@@ -33,6 +35,8 @@ public class QueryDocketTask {
     private static final String CHECK_FIELD = "zzbs";
     private static final String CHECK_SUCCESS = "0";
     private static final String CHECK_FAIL = "1";
+    // 短信签名（【珠海航展】）
+    private static final String SIGN_NAME = "【珠海航展】";
 
 
     @Scheduled(fixedRate = 1000 * 60 * 60)
@@ -48,10 +52,13 @@ public class QueryDocketTask {
                 // 审核失败
                 if (jsonObject == null || CHECK_SUCCESS.equals(jsonObject.getString(CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_FAILED);
+                    SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
                 }
                 // 审核成功
                 else if (CHECK_FAIL.equals(jsonObject.getString(CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_SUCCESS);
+                    SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_PS, SIGN_NAME, bill.getPossessorPhone(), null);
+
                 }
             }
             billService.updateBatchById(list);

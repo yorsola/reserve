@@ -1,6 +1,8 @@
 package com.ac.reserve.web.api.po;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
@@ -80,11 +82,13 @@ public class Bill implements Serializable {
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
+    @TableField(value = "created", fill = FieldFill.INSERT)
     private LocalDateTime created;
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
+    @TableField(value = "created", fill = FieldFill.UPDATE)
     private LocalDateTime updated;
     /**
      * 有效性,1-存在，0-不存在

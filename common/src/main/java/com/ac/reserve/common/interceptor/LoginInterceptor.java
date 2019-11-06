@@ -15,13 +15,16 @@ import java.io.PrintWriter;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
+    // redis登录保存token前缀
+    private static final String REDIS_LOGIN_TOKEN_KEY = "login_";
+
     @Autowired
     private RedisUtil redisUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String accessToken = request.getHeader("accessToken");
-        if (StringUtils.isNotBlank(accessToken) && redisUtil.hasKey(accessToken)) {
+        if (StringUtils.isNotBlank(accessToken) && redisUtil.hasKey(REDIS_LOGIN_TOKEN_KEY + accessToken)) {
             return true;
         }
         PrintWriter writer = null;

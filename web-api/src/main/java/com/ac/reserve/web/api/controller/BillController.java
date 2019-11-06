@@ -1,7 +1,9 @@
 package com.ac.reserve.web.api.controller;
 
+import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.response.BaseResponse;
+import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
 import com.ac.reserve.web.api.po.Bill;
@@ -33,12 +35,18 @@ import java.util.List;
 @CrossOrigin("*")
 public class BillController {
 
+    // 申请成功code
+    private static final String APPLY_EXAMINE_SUCCESS = "1";
+    // 短信签名（【珠海航展】）
+    private static final String SIGN_NAME = "【珠海航展】";
+
     @Autowired
     private BillService billService;
     @Autowired
     private ExamineApiService examineApiService;
 
-    private static final String APPLY_EXAMINE_SUCCESS = "1";
+    @Autowired
+    private SmsUtil smsUtil;
 
     @ApiOperation(value = "获取票据信息")
     @ApiImplicitParams({
@@ -72,10 +80,14 @@ public class BillController {
                 JSONObject data = jsonObject.getJSONObject("data");
                 bsId = data.getString("bsId");
                 bill.setExamineId(bsId);
+                // 发送 提交预约 短信
+                SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_SUBMIT, SIGN_NAME, bill.getPossessorPhone(), null);
             }
             // 申请失败
             else {
                 bill.setState(DataSourceConstant.APPROVAL_FAILED);
+                // 发送预约失败短信
+                SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
             }
             list.add(bill);
         }

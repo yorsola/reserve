@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 @Api(value="ogin_controller",tags={"登录接口"})
 @RestController
 @RequestMapping("/login")
@@ -31,8 +33,10 @@ public class LoginController {
     })
     @PostMapping("")
     public BaseResponse login(@RequestParam(value = "code", required = true) String code) {
-        User user = weChatService.login(code);
-        return ResponseBuilder.buildSuccess(user);
+        String accessToken = weChatService.login(code);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("accessToken", accessToken);
+        return ResponseBuilder.buildSuccess(map);
     }
 
 }

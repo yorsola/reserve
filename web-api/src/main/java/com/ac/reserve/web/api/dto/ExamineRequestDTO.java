@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class DocketRequestDTO {
+public class ExamineRequestDTO {
     @ApiModelProperty(value = "证件类型编码")
     private String ztype;
     @ApiModelProperty(value = "证件类型名称")

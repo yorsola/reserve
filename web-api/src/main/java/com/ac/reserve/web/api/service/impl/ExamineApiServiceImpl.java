@@ -1,7 +1,7 @@
 package com.ac.reserve.web.api.service.impl;
 
 import com.ac.reserve.web.api.dto.BillRequestDTO;
-import com.ac.reserve.web.api.dto.DocketRequestDTO;
+import com.ac.reserve.web.api.dto.ExamineRequestDTO;
 import com.ac.reserve.web.api.service.ExamineApiService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -34,7 +34,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
 
     @Override
     public JSONObject applyExamine(BillRequestDTO billRequestDTO){
-        DocketRequestDTO docketRequestDTO = DocketRequestDTO.builder()
+        ExamineRequestDTO examineRequestDTO = ExamineRequestDTO.builder()
                 .zname(billRequestDTO.getPossessorName())
                 .znumber(billRequestDTO.getPossessorNumber())
                 .ztype(billRequestDTO.getDocumentType())
@@ -42,7 +42,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
                 .dydw(billRequestDTO.getCompany()).build();
 
         Map<String,Object> map = new HashMap();
-        map.put("data", docketRequestDTO);
+        map.put("data", examineRequestDTO);
         map.put("user", user);
         map.put("password", password);
         String response = restTemplate.postForObject(applyExamineUrl, map, String.class);

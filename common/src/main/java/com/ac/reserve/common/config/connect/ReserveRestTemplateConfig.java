@@ -2,6 +2,7 @@ package com.ac.reserve.common.config.connect;
 
 import com.ac.reserve.common.exception.ServiceException;
 import com.ac.reserve.common.response.BaseResponse;
+import com.ac.reserve.common.util.JSONUtil;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -31,7 +32,7 @@ public class ReserveRestTemplateConfig extends BaseRestTemplateConfig {
 
 
     @Bean
-    public RestTemplate reserveRestTemplateConfig() {
+    public RestTemplate reserveRestTemplate() {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
         httpClientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
         HttpClient httpClient = httpClientBuilder.setConnectionManager(getConnectionManager()).build();
@@ -58,7 +59,19 @@ public class ReserveRestTemplateConfig extends BaseRestTemplateConfig {
         public void handleError(ClientHttpResponse response) throws IOException {
             String respErrorString = StreamUtils.copyToString(response.getBody(), Charset.forName("UTF-8"));
             BaseResponse baseResponse = null;
-//            JsonUtil.readJson(respErrorString,BaseResponse.class)
+            try {
+                baseResponse = (BaseResponse) JSONUtil.readJson(respErrorString, BaseResponse.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (baseResponse != null) {
+                switch (baseResponse.getCode()) {
+                    case "0":
+                        throw new ServiceException(baseResponse.getMsg());
+                    default:
+                        throw new ServiceException(baseResponse.getMsg());
+                }
+            }
 
         }
     };
