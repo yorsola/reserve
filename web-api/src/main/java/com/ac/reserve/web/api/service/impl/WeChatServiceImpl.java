@@ -56,10 +56,7 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public String getSessionInfo(String code) {
-        LoginResponseDTO loginInfo = new LoginResponseDTO();
-        loginInfo.setOpenid("oTr4F5lO_VLup01hNytIUgW02t08");
-
-//        LoginResponseDTO loginInfo = getLoginResponseDTO(code);
+        LoginResponseDTO loginInfo = getLoginResponseDTO(code);
         // 唯一标识 id
         String openid = loginInfo.getOpenid();
         // 随机生成 UUID token
@@ -71,14 +68,14 @@ public class WeChatServiceImpl implements WeChatService {
         Date now = new Date();
         // 用户已存在
         if (user != null && StringUtils.isNotBlank(user.getOpenid())) {
-            user.setAccesstoken(accessToken);
+            user.setAccessToken(accessToken);
             user.setUpdated(now);
             user.setSessionKey(loginInfo.getSession_key());
         } else {
             user = User.builder()
                     .openid(openid)
                     .sessionKey(loginInfo.getSession_key())
-                    .accesstoken(accessToken)
+                    .accessToken(accessToken)
                     .created(now)
                     .updated(now)
                     .build();

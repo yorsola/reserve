@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -64,6 +65,11 @@ public class Bill implements Serializable {
     @ApiModelProperty(value = "入场序列码值")
     private String code;
     /**
+     * 所属单位
+     */
+    @ApiModelProperty(value = "所属单位")
+    private String company;
+    /**
      * 电子票类型，0-成人电子票，1-儿童电子票
      */
     @ApiModelProperty(value = "电子票类型，0-成人电子票，1-儿童电子票")
@@ -95,6 +101,22 @@ public class Bill implements Serializable {
      */
     @ApiModelProperty(value = "有效性,1-存在，0-不存在")
     private Integer valid;
+    /**
+     * 码值
+     */
+    @ApiModelProperty(value = "码值")
+    private String codeValue;
+    /**
+     * 二维码路径
+     */
+    @ApiModelProperty(value = "二维码路径")
+    private String qrCodePath;
+    /**
+     * 条形码路径
+     */
+    @ApiModelProperty(value = "条形码路径")
+    private String barCodePath;
+
 
 
 }

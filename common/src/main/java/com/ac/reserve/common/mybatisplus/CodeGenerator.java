@@ -48,7 +48,7 @@ public class CodeGenerator {
      */
     public static void main(String[] args) {
         // 生成test表
-        String[] tabArr = new String[]{"round"};
+        String[] tabArr = new String[]{"bill"};
         // 模块名称
         String moduleName = "api";
         // 是否继承BaseEntity

@@ -1,10 +1,12 @@
 package com.ac.reserve.web.api.service.impl;
 
+import com.ac.reserve.common.exception.ServiceException;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
 import com.ac.reserve.web.api.dto.ExamineRequestDTO;
 import com.ac.reserve.web.api.service.ExamineApiService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class ExamineApiServiceImpl implements ExamineApiService {
 
 
@@ -47,21 +50,35 @@ public class ExamineApiServiceImpl implements ExamineApiService {
         map.put("data", examineRequestDTO);
         map.put("user", user);
         map.put("password", password);
-        String response = docketRestTemplate.postForObject(applyExamineUrl, map, String.class);
+        String response = null;
+        try{
+             response = docketRestTemplate.postForObject(applyExamineUrl, map, String.class);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+
         JSONObject jsonObject = JSON.parseObject(response);
         return jsonObject;
 
     }
 
     @Override
-    public JSONObject checkExamineResult(String examineId){
-        Map<String,Object> params = new HashMap();
-        Map<String,Object> data = new HashMap<>();
+    public JSONObject checkExamineResult(String examineId) {
+        Map<String, Object> params = new HashMap();
+        Map<String, Object> data = new HashMap<>();
         data.put("bsId", examineId);
         params.put("user", user);
         params.put("password", password);
         params.put("data", data);
-        String forObject = docketRestTemplate.postForObject(checkExamineUrl, params, String.class);
+        String forObject = null;
+        try {
+            forObject = docketRestTemplate.postForObject(checkExamineUrl, params, String.class);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+
         JSONObject jsonObject = JSONObject.parseObject(forObject);
         return jsonObject;
     }

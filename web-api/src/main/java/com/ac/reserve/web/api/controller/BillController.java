@@ -3,7 +3,6 @@ package com.ac.reserve.web.api.controller;
 import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
 import com.ac.reserve.common.response.BaseResponse;
-import com.ac.reserve.common.util.JSONUtil;
 import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.common.utils.ResponseBuilder;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
@@ -28,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@Api(value="bill_controller",tags={"票据接口"})
 @RestController
 @RequestMapping("/bill")
 @CrossOrigin("*")
@@ -50,13 +49,10 @@ public class BillController {
     private SmsUtil smsUtil;
 
     @ApiOperation(value = "获取票据信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userid", value = "用户id", required = true,  paramType = "path"),
-    })
-    @GetMapping("/{userid}")
-    public BaseResponse getBillInfo(@PathVariable(value = "userid",required = true)Integer userId) {
+    @GetMapping("/{openid}")
+    public BaseResponse getBillInfo(@PathVariable(value = "openid",required = true)String openid) {
         QueryWrapper<Bill> billQueryWrapper = new QueryWrapper<>();
-        billQueryWrapper.eq("user_id",userId);
+        billQueryWrapper.eq("openid",openid);
         billQueryWrapper.eq("valid", DataSourceConstant.DATA_SOURCE_VALID);
         List<Bill> list = billService.list(billQueryWrapper);
         return ResponseBuilder.buildSuccess(list);
@@ -84,21 +80,27 @@ public class BillController {
         Bill bill = null;
         String bsId = null;
         List<Bill> list = new ArrayList<>();
+        Date now = new Date();
         for (BillRequestDTO requestDTO : billRequestDTOS) {
-            JSONObject jsonObject = examineApiService.applyExamine(requestDTO);
-            if (jsonObject == null) {
-                continue;
-            }
             bill = new Bill();
             BeanUtils.copyProperties(requestDTO, bill);
+            JSONObject jsonObject = examineApiService.applyExamine(requestDTO);
+            if (jsonObject == null) {
+                bill.setState(DataSourceConstant.APPROVAL_FAILED);
+                continue;
+            }
+
             // 申请成功
             if (APPLY_EXAMINE_SUCCESS.equals(jsonObject.getString("code"))) {
                 bill.setState(DataSourceConstant.APPROVAL_IN_HAND);
                 JSONObject data = jsonObject.getJSONObject("data");
                 bsId = data.getString("bsId");
                 bill.setExamineId(bsId);
-                // 发送 提交预约 短信
+                //todo 二维码
+                // 发送提交预约短信
                 SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_SUBMIT, SIGN_NAME, bill.getPossessorPhone(), null);
+                // 生成二维码和条形码
+                String codeValue = GetRandomString.getRandomString(8) + System.currentTimeMillis();
             }
             // 申请失败
             else {
@@ -106,6 +108,8 @@ public class BillController {
                 // 发送预约失败短信
                 SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
             }
+            bill.setCreated(now);
+            bill.setUpdated(now);
             list.add(bill);
         }
         billService.saveBatch(list);

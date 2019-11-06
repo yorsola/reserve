@@ -55,8 +55,9 @@ public class QueryDocketTask {
                     SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
                 }
                 // 审核成功
-                else if (CHECK_FAIL.equals(jsonObject.getString(CHECK_FIELD))) {
+                if (CHECK_FAIL.equals(jsonObject.getString(CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_SUCCESS);
+                    //todo 二维码
                     SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_PS, SIGN_NAME, bill.getPossessorPhone(), null);
 
                 }

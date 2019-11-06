@@ -6,7 +6,7 @@
         <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ac.reserve.web.api.po.Bill">
         <id column="id" property="id" />
-        <result column="user_id" property="userId" />
+        <result column="openid" property="openid" />
         <result column="document_type" property="documentType" />
         <result column="possessor_number" property="possessorNumber" />
         <result column="possessor_name" property="possessorName" />
@@ -14,12 +14,16 @@
         <result column="possessor_phone" property="possessorPhone" />
         <result column="round_id" property="roundId" />
         <result column="code" property="code" />
+        <result column="company" property="company" />
         <result column="type" property="type" />
         <result column="state" property="state" />
         <result column="examine_id" property="examineId" />
         <result column="created" property="created" />
         <result column="updated" property="updated" />
         <result column="valid" property="valid" />
+        <result column="code_value" property="codeValue" />
+        <result column="qr_code_path" property="qrCodePath" />
+        <result column="bar_code_path" property="barCodePath" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

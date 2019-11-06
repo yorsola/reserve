@@ -13,7 +13,7 @@ public class BillRequestDTO {
     /**
      * 证件类型：111=二代居民身份证，411=护照，990=其他，991=港澳居民来往内地通行证，992=香港永久性居民身份证，993台胞证
      */
-    @NotNull(message = "证件类型")
+    @NotBlank(message = "证件类型")
     @ApiModelProperty(value = "证件类型：111=二代居民身份证，411=护照，990=其他，991=港澳居民来往内地通行证，992=香港永久性居民身份证，993台胞证")
     private String documentType;
     /**
@@ -41,7 +41,12 @@ public class BillRequestDTO {
      * 场次
      */
     @NotNull(message = "场次不能为空")
-    @ApiModelProperty(value = "场次 id")
+    @ApiModelProperty(value = "场次 id," +
+            "1-A区入口：昌盛路、粤海东路，" +
+            "2-B区入口：粤海东路、联安路，" +
+            "3-C区入口：联安路、水湾路，" +
+            "4-D区入口：水湾路，" +
+            "5-E区入口：情侣南路延长线")
     private Integer roundId;
     /**
      * 电子票类型，0-成人电子票，1-儿童电子票
@@ -50,10 +55,15 @@ public class BillRequestDTO {
     @ApiModelProperty(value = "电子票类型，0-成人电子票，1-儿童电子票")
     private Integer type;
 
+
     /**
      * 所属单位
      */
     @ApiModelProperty(value = "所属单位")
     private String company;
+
+    public void setCompany(String company) {
+        this.company = "澳门回归20周年-小程序";
+    }
 
 }

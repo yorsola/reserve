@@ -35,15 +35,12 @@ spring:
     allow-bean-definition-overriding: true
 
 mybatis:
-  type-aliases-package: com.ac.reserve.web.api.domain
+  type-aliases-package: com.ac.reserve.web.api.po
   mapper-locations: classpath:mapper/*.xml
 
 weChat:
   appid: wx1a5f71aebc51e337
   secret: 45e58341e8a505dad4a09b2f322e4395
-
-token:
-  expirationMilliSeconds: 7200000
 
 examine:
   url:
@@ -53,7 +50,7 @@ examine:
     user: 2020hz
     password: 2020hz*_123
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

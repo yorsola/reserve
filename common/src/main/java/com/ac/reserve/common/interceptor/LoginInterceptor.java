@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 public class LoginInterceptor implements HandlerInterceptor {
 
     // redis登录保存token前缀
-    private static final String REDIS_LOGIN_TOKEN_KEY = "login_";
+    private static final String REDIS_LOGIN_TOKEN_KEY = "BEARER_TOKEN_";
 
     @Autowired
     private RedisUtil redisUtil;

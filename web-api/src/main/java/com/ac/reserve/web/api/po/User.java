@@ -29,6 +29,7 @@ public class User implements Serializable {
      * openid
      */
     @ApiModelProperty(value = "openid")
+    @TableField(value = "openid")
     private String openid;
     /**
      * 会话密钥
@@ -39,7 +40,7 @@ public class User implements Serializable {
      * 访问令牌
      */
     @ApiModelProperty(value = "访问令牌")
-    private String accesstoken;
+    private String accessToken;
     /**
      * 创建时间
      */

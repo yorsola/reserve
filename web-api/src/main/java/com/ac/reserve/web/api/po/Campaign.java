@@ -2,8 +2,8 @@ package com.ac.reserve.web.api.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -51,7 +51,7 @@ public class Campaign implements Serializable {
      * 活动时间
      */
     @ApiModelProperty(value = "活动时间")
-    private LocalDateTime campaignTime;
+    private Date campaignTime;
     /**
      * 活动详情
      */
