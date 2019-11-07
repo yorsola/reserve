@@ -65,17 +65,16 @@ public class WeChatServiceImpl implements WeChatService {
         wrapper.eq("openid", openid);
         wrapper.eq("valid", DataSourceConstant.DATA_SOURCE_VALID);
         User user = userService.getOne(wrapper);
+        Date now = new Date();
+        user.setAccessToken(accessToken);
+        user.setSessionKey(loginInfo.getSession_key());
         // 用户已存在
         if (user != null && StringUtils.isNotBlank(user.getOpenid())) {
-            user.setAccessToken(accessToken);
-            user.setSessionKey(loginInfo.getSession_key());
+            user.setCreated(now);
         } else {
-            user = User.builder()
-                    .openid(openid)
-                    .sessionKey(loginInfo.getSession_key())
-                    .accessToken(accessToken)
-                    .build();
+            user.setOpenid(openid);
         }
+        user.setUpdated(now);
         userService.saveOrUpdate(user);
         redisTemplate.opsForValue().set(accessToken, openid, REDIS_LOGIN_TOKEN_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
         return user.getOpenid();

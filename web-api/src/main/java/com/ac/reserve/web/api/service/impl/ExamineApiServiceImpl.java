@@ -1,6 +1,6 @@
 package com.ac.reserve.web.api.service.impl;
 
-import com.ac.reserve.common.exception.ServiceException;
+import com.ac.reserve.common.utils.log.Log;
 import com.ac.reserve.web.api.dto.BillRequestDTO;
 import com.ac.reserve.web.api.dto.ExamineRequestDTO;
 import com.ac.reserve.web.api.service.ExamineApiService;
@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@Slf4j
 public class ExamineApiServiceImpl implements ExamineApiService {
 
     private static final String DYDW = "澳门回归20周年-小程序";
@@ -56,7 +55,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
         try{
              response = docketRestTemplate.postForObject(applyExamineUrl, map, String.class);
         }catch (Exception e){
-            log.error(e.getMessage());
+            Log.e(e);
             return null;
         }
 
@@ -77,7 +76,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
         try {
             forObject = docketRestTemplate.postForObject(checkExamineUrl, params, String.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            Log.e(e);
             return null;
         }
 

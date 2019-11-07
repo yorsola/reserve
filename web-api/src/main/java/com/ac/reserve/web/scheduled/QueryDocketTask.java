@@ -61,8 +61,18 @@ public class QueryDocketTask {
                 // 审核成功
                 if (BS_CHECK_SUCCESS.equals(jsonObject.getString(BS_CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_SUCCESS);
-                    //todo 二维码
-                    SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_PS, SIGN_NAME, bill.getPossessorPhone(), null);
+
+                    JSONObject smsJson = new JSONObject();
+
+                    smsJson.put("date", "2019.12.20 20:00");
+                    smsJson.put("startTime", "16点");
+                    smsJson.put("endTime", "20点");
+                    smsJson.put("addressA", "昌盛路至粤海东路");
+                    smsJson.put("addressB", "粤海东路至联安路");
+                    smsJson.put("addressC", "联安路至水湾路");
+                    smsJson.put("addressD", "水湾路至情侣南路");
+                    smsJson.put("addressE", "情侣南路");
+                    SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_PS, SIGN_NAME, bill.getPossessorPhone(), smsJson.toJSONString());
                     String codeValue = GetRandomString.getRandomString(8) + System.currentTimeMillis();
                     bill.setCode(codeValue);
                 }

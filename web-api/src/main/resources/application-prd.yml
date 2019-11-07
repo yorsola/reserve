@@ -3,22 +3,20 @@ server:
   servlet:
     context-path: /reserve/v1/api
 spring:
-  profiles:
-    active: prd
   redis:
     database: 0
-#    url: redis://user:@192.168.159.129:6379
-    host: 192.168.159.129
-    password: 123456
-    port: 16379
+#    url: redis://user:@127.0.0.1:6379
+    host: 127.0.0.1
+    password:
+    port: 6379
     ssl: false
     timeout: 5000s
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.159.129:3306/reserve?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: 123456
+    url: jdbc:mysql://112.74.47.163:3306/reserve?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: yhwh
+    password: 987yhwh321
     hikari:
       minimum-idle: 5
       idle-timeout: 600000
@@ -54,9 +52,9 @@ examine:
 
 logging:
   config:
-    classpath: logback-boot.xml
+    classpath: prd-logback-boot.xml
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

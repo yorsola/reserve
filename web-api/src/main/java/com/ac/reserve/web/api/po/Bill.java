@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @Data
-@Builder
+//@Builder
 @Accessors(chain = true)
 public class Bill implements Serializable {
 
@@ -29,8 +29,8 @@ public class Bill implements Serializable {
     /**
      * 用户 id
      */
-    @ApiModelProperty(value = "用户 id")
-    private Long userId;
+    @ApiModelProperty(value = "openid")
+    private Long openid;
     /**
      * 证件类型，111-二代居民身份证，411-护照，990=其他，991=港澳居民往来内地通行证，992-香港永久性居民身份证，993-台胞证
      */

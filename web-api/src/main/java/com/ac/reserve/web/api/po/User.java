@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,7 +28,7 @@ public class User implements Serializable {
      * openid
      */
     @ApiModelProperty(value = "openid")
-    @TableField(value = "openid")
+//    @TableField(value = "openid")
     private String openid;
     /**
      * 会话密钥

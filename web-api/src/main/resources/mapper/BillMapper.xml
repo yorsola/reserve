@@ -101,10 +101,10 @@
             cur_tab.code,
             cur_tab.type,
             cur_tab.state state,
-            sec.round_location roundLocation
+            sec.round_info roundIfo
         FROM
             bill cur_tab LEFT JOIN round sec ON cur_tab.round_id = sec.id
-        where cur_tab.id = #{id}
+        where cur_tab.code = #{code}
     </select>
 
 

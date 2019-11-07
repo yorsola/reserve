@@ -3,16 +3,19 @@ package com.ac.reserve.common.config.Interceptor;
 import com.ac.reserve.common.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@Configuration
+@Configuration
+@Order(1)
 public class InterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
     LoginInterceptor webLoginInterceptor;
-    final String[] notPaths = {"/webjars/**", "/swagger-*", "/login/**"};
+
+    final String[] notPaths = {"/webjars/**", "/swagger-*", "/login/**", "/bill/**"};
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ///往拦截器注册器中注册自己的拦截器，并添加拦截路径

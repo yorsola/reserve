@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface BillMapper extends BaseMapper<Bill> {
 
-    BillPdfInfoDTO selectBillPdfInfo(@Param("id") String id);
+    BillPdfInfoDTO selectBillPdfInfo(@Param("code") String code);
 }

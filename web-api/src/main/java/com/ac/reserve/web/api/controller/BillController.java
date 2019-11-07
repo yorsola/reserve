@@ -2,6 +2,7 @@ package com.ac.reserve.web.api.controller;
 
 import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
+import com.ac.reserve.common.exception.ServiceException;
 import com.ac.reserve.common.response.BaseResponse;
 import com.ac.reserve.common.util.JSONUtil;
 import com.ac.reserve.common.util.SmsUtil;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -72,22 +74,6 @@ public class BillController {
         return ResponseBuilder.buildSuccess(list);
     }
 
-    public static void main(String[] args) {
-        List<BillRequestDTO> billRequestDTOS = new ArrayList<>();
-        BillRequestDTO billRequestDTO = new BillRequestDTO();
-        billRequestDTO.setDocumentType("111");
-        billRequestDTO.setPossessorNumber("440801199411262471");
-        billRequestDTO.setPossessorImg("http://localhost:8080/reserve/v1/api/bill/reserve");
-        billRequestDTO.setPossessorName("李四");
-        billRequestDTO.setPossessorPhone("128109012");
-        billRequestDTO.setRoundId(1);
-        billRequestDTO.setType(1);
-        billRequestDTOS.add(billRequestDTO);
-
-        String s = JSONUtil.toJSONString(billRequestDTOS);
-        System.out.println(s);
-    }
-
     @ApiOperation(value = "立即预约")
     @PostMapping("/reserve")
     public BaseResponse reserve(@RequestBody @Valid List<BillRequestDTO> billRequestDTOS){
@@ -95,14 +81,13 @@ public class BillController {
         String bsId = null;
         List<Bill> list = new ArrayList<>();
         for (BillRequestDTO requestDTO : billRequestDTOS) {
-            bill = Bill.builder().build();
+            bill = new Bill();
             BeanUtils.copyProperties(requestDTO, bill);
             JSONObject jsonObject = examineApiService.applyExamine(requestDTO);
             if (jsonObject == null) {
                 bill.setState(DataSourceConstant.APPROVAL_FAILED);
                 // 发送预约失败短信
                 SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
-                continue;
             }
             // 申请成功
             if (APPLY_EXAMINE_SUCCESS.equals(jsonObject.getString("code"))) {
@@ -110,9 +95,12 @@ public class BillController {
                 JSONObject data = jsonObject.getJSONObject("data");
                 bsId = data.getString("bsId");
                 bill.setExamineId(bsId);
-                //todo 二维码
                 // 发送提交预约短信
-                SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_SUBMIT, SIGN_NAME, bill.getPossessorPhone(), null);
+                JSONObject smsJson = new JSONObject();
+                smsJson.put("date", "2019.12.20 20:00");
+                smsJson.put("address", "粤海东路至联安路");
+                smsJson.put("order", bsId);
+                SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_SUBMIT, SIGN_NAME, bill.getPossessorPhone(), smsJson.toJSONString());
             }
             // 申请失败
             else {
@@ -128,19 +116,19 @@ public class BillController {
 
 
     @GetMapping("/downLoad")
-    public ResponseEntity downLoad(String billId) throws UnsupportedEncodingException {
-        BillPdfInfoDTO billPdfInfoDTO = billMapper.selectBillPdfInfo(billId);
+    public ResponseEntity downLoad(@RequestParam(value = "code") String code) throws UnsupportedEncodingException {
+        BillPdfInfoDTO billPdfInfoDTO = billMapper.selectBillPdfInfo(code);
         if (billPdfInfoDTO == null) {
-            ResponseBuilder.buildError("票据不存在.");
+            throw new ServiceException("票据不存在.");
         } else if (billPdfInfoDTO.getState() != DataSourceConstant.DATA_SOURCE_VALID){
-            ResponseBuilder.buildError("该票据还没通过审核");
+            throw new ServiceException("该票据还没通过审核.");
         }
 
         Map data = new HashMap();
         data.put("possessor_name", billPdfInfoDTO.getPossessorName());
         data.put("possessor_phone", billPdfInfoDTO.getPossessorPhone());
         data.put("type", billPdfInfoDTO.getType() == 0 ? "成人电子票" : "儿童电子票");
-        data.put("round", billPdfInfoDTO.getRoundLocation());
+        data.put("round", billPdfInfoDTO.getRoundIfo());
 
         byte[] body = pdfService.getPdfByte(billPdfInfoDTO.getCode(), billPdfInfoDTO.getPossessorNumber(), data);
         String fileName = "downLoadPdf.pdf";

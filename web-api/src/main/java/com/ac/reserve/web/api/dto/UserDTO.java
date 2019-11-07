@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserDTO {
     private String openid;
-    private String accesstoken;
+    private String accessToken;
     private Long created;
     private Long updated;
 }

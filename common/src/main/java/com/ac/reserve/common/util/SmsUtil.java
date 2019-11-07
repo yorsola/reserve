@@ -56,6 +56,7 @@ public class SmsUtil {
         request.putQueryParameter("TemplateCode", TemplateCode);
 //        request.putQueryParameter("TemplateCode", "SMS_147195339");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
+
         if(!StringUtils.isEmpty(code)){
             request.putQueryParameter("TemplateParam",code);
         }
@@ -79,6 +80,6 @@ public class SmsUtil {
         jsonObject.put("company", "zyy公司");
         jsonObject.put("password", "123");
         System.out.println(jsonObject.toString());
-        sendSms("SMS_176522071", "智慧航展平台", "18229882941", jsonObject.toString());
+        sendSms("SMS_176522071", "智慧航展平台", "18520458878", jsonObject.toString());
     }
 }

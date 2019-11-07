@@ -41,11 +41,6 @@ CREATE TABLE `bill` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of bill
--- ----------------------------
-INSERT INTO `bill` VALUES ('1', '1', '1', '1', '1', null, '1', '1', '1', '', '1', '0', '1', null, null, '1');
-
--- ----------------------------
 -- Table structure for campaign
 -- ----------------------------
 DROP TABLE IF EXISTS `campaign`;
