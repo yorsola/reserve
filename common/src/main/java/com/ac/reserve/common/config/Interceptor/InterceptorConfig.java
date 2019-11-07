@@ -15,7 +15,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     LoginInterceptor webLoginInterceptor;
 
-    final String[] notPaths = {"/webjars/**", "/swagger-*", "/login/**", "/bill/**"};
+    final String[] notPaths = {"/webjars/**", "/swagger-*", "/login/**"};
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ///往拦截器注册器中注册自己的拦截器，并添加拦截路径
