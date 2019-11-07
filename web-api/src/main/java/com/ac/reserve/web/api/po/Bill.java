@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import io.swagger.annotations.ApiModel;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @Data
+@Builder
 @Accessors(chain = true)
 public class Bill implements Serializable {
 
@@ -89,34 +91,18 @@ public class Bill implements Serializable {
      */
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "created", fill = FieldFill.INSERT)
-    private LocalDateTime created;
+    private Date created;
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
     @TableField(value = "created", fill = FieldFill.UPDATE)
-    private LocalDateTime updated;
+    private Date updated;
     /**
      * 有效性,1-存在，0-不存在
      */
     @ApiModelProperty(value = "有效性,1-存在，0-不存在")
     private Integer valid;
-    /**
-     * 码值
-     */
-    @ApiModelProperty(value = "码值")
-    private String codeValue;
-    /**
-     * 二维码路径
-     */
-    @ApiModelProperty(value = "二维码路径")
-    private String qrCodePath;
-    /**
-     * 条形码路径
-     */
-    @ApiModelProperty(value = "条形码路径")
-    private String barCodePath;
-
 
 
 }

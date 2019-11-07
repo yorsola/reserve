@@ -20,6 +20,8 @@ import java.util.Map;
 @Slf4j
 public class ExamineApiServiceImpl implements ExamineApiService {
 
+    private static final String DYDW = "澳门回归20周年-小程序";
+
 
     @Autowired
     @Qualifier("docketRestTemplate")
@@ -44,7 +46,7 @@ public class ExamineApiServiceImpl implements ExamineApiService {
                 .znumber(billRequestDTO.getPossessorNumber())
                 .ztype(billRequestDTO.getDocumentType())
                 .ztypename(getIdCardTypeName(billRequestDTO.getDocumentType()))
-                .dydw(billRequestDTO.getCompany()).build();
+                .dydw(DYDW).build();
 
         Map<String,Object> map = new HashMap();
         map.put("data", examineRequestDTO);

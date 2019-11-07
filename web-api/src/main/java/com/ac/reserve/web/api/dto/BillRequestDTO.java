@@ -55,15 +55,4 @@ public class BillRequestDTO {
     @ApiModelProperty(value = "电子票类型，0-成人电子票，1-儿童电子票")
     private Integer type;
 
-
-    /**
-     * 所属单位
-     */
-    @ApiModelProperty(value = "所属单位")
-    private String company;
-
-    public void setCompany(String company) {
-        this.company = "澳门回归20周年-小程序";
-    }
-
 }

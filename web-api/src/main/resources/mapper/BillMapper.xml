@@ -93,5 +93,19 @@
       </if>
     </sql>
 
+    <select id="selectBillPdfInfo" resultType="com.ac.reserve.web.api.dto.BillPdfInfoDTO" >
+        SELECT
+            cur_tab.possessor_number possessorNumber,
+            cur_tab.possessor_name possessorName,
+            cur_tab.possessor_phone possessorPhone,
+            cur_tab.code,
+            cur_tab.type,
+            cur_tab.state state,
+            sec.round_location roundLocation
+        FROM
+            bill cur_tab LEFT JOIN round sec ON cur_tab.round_id = sec.id
+        where cur_tab.id = #{id}
+    </select>
+
 
 </mapper>

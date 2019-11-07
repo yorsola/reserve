@@ -5,6 +5,7 @@ public class DataSourceConstant {
     public static final int DATA_SOURCE_VALID = 1;
     public static final int DATA_SOURCE_INVALID = 0;
 
+    // 审核成功
     public static final int APPROVAL_SUCCESS = 1;
     // 审核拒绝
     public static final int APPROVAL_FAILED = 2;

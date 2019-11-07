@@ -2,6 +2,7 @@ package com.ac.reserve.web.scheduled;
 
 import com.ac.reserve.common.constant.CommonConstant;
 import com.ac.reserve.common.constant.DataSourceConstant;
+import com.ac.reserve.common.util.GetRandomString;
 import com.ac.reserve.common.util.SmsUtil;
 import com.ac.reserve.web.api.po.Bill;
 import com.ac.reserve.web.api.service.BillService;
@@ -32,9 +33,12 @@ public class QueryDocketTask {
     @Value("${examine.account.password}")
     private String password;
 
-    private static final String CHECK_FIELD = "zzbs";
-    private static final String CHECK_SUCCESS = "0";
-    private static final String CHECK_FAIL = "1";
+    // 备审状态：1:背审通过,0:背审不通过
+    private static final String BS_CHECK_FIELD = "zzbs";
+    // 备审通过编码
+    private static final String BS_CHECK_SUCCESS = "1";
+    // 备审不通过
+    private static final String BS_CHECK_FAIL = "0";
     // 短信签名（【珠海航展】）
     private static final String SIGN_NAME = "【珠海航展】";
 
@@ -50,16 +54,17 @@ public class QueryDocketTask {
                 String examineId = bill.getExamineId();
                 JSONObject jsonObject = examineApiService.checkExamineResult(examineId);
                 // 审核失败
-                if (jsonObject == null || CHECK_SUCCESS.equals(jsonObject.getString(CHECK_FIELD))) {
+                if (jsonObject == null || BS_CHECK_FAIL.equals(jsonObject.getString(BS_CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_FAILED);
                     SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_TD, SIGN_NAME, bill.getPossessorPhone(), null);
                 }
                 // 审核成功
-                if (CHECK_FAIL.equals(jsonObject.getString(CHECK_FIELD))) {
+                if (BS_CHECK_SUCCESS.equals(jsonObject.getString(BS_CHECK_FIELD))) {
                     bill.setState(DataSourceConstant.APPROVAL_SUCCESS);
                     //todo 二维码
                     SmsUtil.sendSms(CommonConstant.TEMPLATE_APPOINTMENT_PS, SIGN_NAME, bill.getPossessorPhone(), null);
-
+                    String codeValue = GetRandomString.getRandomString(8) + System.currentTimeMillis();
+                    bill.setCode(codeValue);
                 }
             }
             billService.updateBatchById(list);
